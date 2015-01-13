@@ -9,7 +9,7 @@ The Sitecore SDK requires that you have installed and are running Zimbra Social 
 **Sitecore**
 - Sitecore.Client.dll
 - Sitecore.Kernel.dll
--Sitecore.Mvc.dll
+- Sitecore.Mvc.dll
 
 **Zimbra Social**
 You will need to also include all the files from the SDK and a compiled verion of the SDK itself.
