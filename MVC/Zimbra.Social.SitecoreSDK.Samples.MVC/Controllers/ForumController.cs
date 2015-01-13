@@ -13,7 +13,7 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
    
     public class ForumController : Controller
     {
-        // GET: Forum
+        // GET: Forum  Currently a site wide aggregate
         public ActionResult ListForums()
         {
             //If you loaded multiple hosts, like say for each website, replace the string with a retrieval method of your choice.
@@ -37,7 +37,7 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
 
         public ActionResult ListThreads()
         {
-            int forumId = 52;
+            int forumId = 52; //Hard-Coded for testing purposes, you could modify this to include a dynamic way of setting it
             var host = Api.GetHost("website", true);
             var options = new Hashtable();
             options.Add("PageSize", 50);
@@ -52,7 +52,7 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
 
         public ActionResult ViewThread()
         {
-            var threadId = 238888;
+            var threadId = 238888;//Hard-Coded for testing purposes, you could modify this to include a dynamic way of setting it
             var host = Api.GetHost("website", true);
 
             var thread = host.ExecuteMethod("core_v2_forumThread", "Get", threadId);
