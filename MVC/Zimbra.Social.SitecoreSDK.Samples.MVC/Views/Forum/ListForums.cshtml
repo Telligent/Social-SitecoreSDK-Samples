@@ -1,0 +1,35 @@
+﻿@model dynamic
+
+<table class="forum-list">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Threads</th>
+            <th>Replies</th>
+            <th>Last</th>
+        </tr>
+    </thead>
+    <tbody>
+       @foreach (var forum in Model)
+       {
+        <tr>
+            <td>
+                <h3 class="forum-name"><a href="@forum.Url">@forum.Name</a></h3>
+                <div class="forum-description">
+                   @Html.Raw(forum.Description)
+                </div>
+            </td>
+            <td>
+                @forum.ThreadCount
+            </td>
+            <td>
+                @forum.ReplyCount
+            </td>
+            <td>
+                @forum.LatestPostDate
+            </td>
+        </tr>
+       }
+              
+    </tbody>
+</table>

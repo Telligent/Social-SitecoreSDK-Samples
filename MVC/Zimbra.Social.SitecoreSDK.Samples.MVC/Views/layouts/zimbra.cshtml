@@ -1,0 +1,21 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.Mvc.Analytics.Extensions
+@using Sitecore.Mvc.Presentation
+@model RenderingModel
+@{
+  Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>@Html.Sitecore().Field("title", new { DisableWebEdit = true })</title>
+  @Html.Sitecore().VisitorIdentification()
+</head>
+  <body> 
+      <h1>@Html.Sitecore().Field("title")</h1>
+      <p>@DateTime.UtcNow.ToString()</p>
+    <div>
+      @Html.Sitecore().Placeholder("main")
+    </div>
+  </body>
+</html>

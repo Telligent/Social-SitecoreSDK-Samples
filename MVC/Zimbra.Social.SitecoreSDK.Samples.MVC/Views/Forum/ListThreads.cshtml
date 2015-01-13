@@ -1,0 +1,41 @@
+﻿@model dynamic
+
+<table class="forum-list">
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Replies</th>
+            <th>Views</th>
+            <th>Last</th>
+        </tr>
+    </thead>
+    <tbody>
+       @foreach (var thread in Model)
+       {
+        <tr>
+            <td>
+                <h4 class="post-name"><a href="@thread.Url">@thread.Subject</a></h4>
+               
+            </td>
+            <td>
+                @thread.ReplyCount
+            </td>
+            <td>
+                @thread.ViewCount
+            </td>
+            <td>
+                <div class="author-info">
+                    <img src="@thread.Author.AvatarUrl" alt="User"/>
+                    <ul>
+                        <li>@thread.Author.DisplayName</li>
+                        <li>Last Reply: @thread.LatestPostDate</li>
+
+                    </ul>
+                </div>
+                
+            </td>
+        </tr>
+       }
+              
+    </tbody>
+</table>

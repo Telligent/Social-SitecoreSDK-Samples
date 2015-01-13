@@ -1,0 +1,61 @@
+﻿@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.ForumThreadViewModel
+
+@{ bool isQA = Model.Thread.ThreadType == "QuestionAndAnswer";}
+@{ bool hasAnswers = Model.Thread.AnswerCount != null && Model.Thread.AnswerCount > 0;}
+@{ bool hasSuggestedAnswers = Model.Thread.SuggestedAnswerCount != null && Model.Thread.SuggestedAnswerCount > 0;}
+<style>
+    table.post-author-details{margin-bottom:5px;border:1px solid #333}
+    div.post-author{padding:3px;background-color:#dcdcdc}
+</style>
+<h1 class="thread-subject">@Model.Thread.Subject</h1>
+
+@if (isQA && (hasAnswers || hasSuggestedAnswers))
+{
+    <div class="thread-answer-status @(hasAnswers ? "answered" : "suggested-answer")">
+        This thread has @(hasAnswers ? "verified " : "suggested") answers
+    </div>
+}
+
+<div class="thread">
+    <div class="post-author">
+        <table class="post-author-details">
+            <tbody>
+                <tr>
+                    <td class="post-author-avatar"></td>
+                    <td class="post-user">
+                        <span>@Model.Thread.Author.DisplayName</span>
+                        <div class="post-date">
+                            Posted: @Model.Thread.Date
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="user-defined-markup post-body">
+        @Html.Raw(Model.Thread.Body())
+    </div>
+</div>
+<div class="view-thread">
+    @foreach (var post in Model.Replies)
+    {
+        <div class="post-author">
+            <table class="post-author-details">
+                <tbody>
+                    <tr>
+                        <td class="post-author-avatar"></td>
+                        <td class="post-user">
+                            <span>@post.Author.DisplayName</span>
+                            <div class="post-date">
+                                Posted: @post.Date
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="user-defined-markup post-body">
+            @Html.Raw(post.Body())
+        </div>
+    }
+</div>
