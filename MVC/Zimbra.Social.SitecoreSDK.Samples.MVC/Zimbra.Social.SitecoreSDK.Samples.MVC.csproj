@@ -90,6 +90,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Telligent.Evolution.RemoteScriptedContentFragments.dll</HintPath>
     </Reference>
+    <Reference Include="Zimbra.Social.RemotingSDK.Sitecore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Zimbra.Social.RemotingSDK.Sitecore.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Helpers">
@@ -115,12 +119,6 @@
     <Content Include="Views\Forum\ListForums.cshtml" />
     <Content Include="Views\Forum\ListThreads.cshtml" />
     <Content Include="Views\Forum\ViewThread.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Social-Sitecore-SDK\src\Zimbra.Social.RemotingSDK.Sitecore.csproj">
-      <Project>{5a15b960-d9bc-43b3-95b4-360b22da69f0}</Project>
-      <Name>Zimbra.Social.RemotingSDK.Sitecore</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
