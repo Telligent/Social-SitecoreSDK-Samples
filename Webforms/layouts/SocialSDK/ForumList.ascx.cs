@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Telligent.Evolution.Extensibility.UI.Version1;
-using Zimbra.Social.RemotingSDK.Sitecore;
+using Telligent.Evolution.Extensibility.Rest.Version1;
+
 
 public partial class Forums_ForumList : System.Web.UI.UserControl
 {
-    private RemoteScriptedContentFragmentHost host;
+    private RestHost host;
     protected override void OnInit(EventArgs e)
     {
         base.OnInit(e);
@@ -30,12 +31,10 @@ public partial class Forums_ForumList : System.Web.UI.UserControl
         var lblLast = e.Item.FindControl("lblLast") as Label; 
         nameLabel.Text = forum.Name;
         nameLabel.NavigateUrl = forum.Url;
-        litDesc.Text = forum.Description;
+        litDesc.Text = string.IsNullOrEmpty(forum.Description) ? "":forum.Description;
         lblThreads.Text = forum.ThreadCount.ToString();
         lblReplies.Text = forum.ReplyCount.ToString();
-
-      //  var ago = host.ExecuteMethod("core_v2_language", "FormatAgoDate", (DateTime) forum.LatestPostDate, true);
-      //  lblLast.Text = ago.ToString();
+        lblLast.Text = DateTime.Parse(forum.LatestPostDate.ToString()).ToString();
 
     }
 
@@ -47,20 +46,17 @@ public partial class Forums_ForumList : System.Web.UI.UserControl
 
             //If you loaded multiple hosts, like say for each website, replace the string with a retrieval method of your choice.
             //Example, if you loaded by site name you could get the current site name.
-             host = Api.GetHost("website", true);
+             host = Zimbra.Social.RemotingSDK.Sitecore.Api.GetHost("website", true);
 
-            //When faced with options objects used in platofmr API, you can pass them in as Hashtables with the key being the property
-            //and the value
-            var options = new Hashtable();
-            options.Add("PageSize",50);
-            options.Add("PageIndex",0);
-            options.Add("SortBy","LastPost");
-            options.Add("SortOrder","Descending");
+            var options = new NameValueCollection();
+            options.Add("PageSize", "50");
+            options.Add("PageIndex", "0");
+            options.Add("SortBy", "LastPost");
+            options.Add("SortOrder", "Descending");
 
-            //The third parameter is a params[] argument, it should be the method arguments for the corresponding API.
-            //example:  If the API is core_v2_Foo.List(int,string,Options options) then the 3rd parm could be (1,"bar",Hashtable obj)
-            dynamic forums = host.ExecuteMethod("core_v2_forum", "List", options);
-            rptForums.DataSource = forums;
+            var endpoint = "forums.json?" + String.Join("&", options.AllKeys.Select(a => a + "=" + HttpUtility.UrlEncode(options[a])));
+            dynamic response = host.GetToDynamic(2, endpoint);
+            rptForums.DataSource = response.Forums;
             rptForums.DataBind();
         }
         catch (Exception ex)
