@@ -86,9 +86,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Telligent.Evolution.Extensions.OAuthAuthentication.dll</HintPath>
     </Reference>
-    <Reference Include="Telligent.Evolution.RemoteScriptedContentFragments, Version=2.0.32.40107, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Telligent.Evolution.RemoteScriptedContentFragments.dll</HintPath>
+    <Reference Include="Telligent.Rest.SDK">
+      <HintPath>..\..\..\Social-Sitecore-SDK\lib\Telligent.Rest.SDK.dll</HintPath>
     </Reference>
     <Reference Include="Zimbra.Social.RemotingSDK.Sitecore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -105,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ForumController.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Models\ForumThreadViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -112,9 +112,10 @@
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\SitecoreMVC.pubxml" />
+    <None Include="Properties\PublishProfiles\Sitecore.local.com.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Views\layouts\zimbra.cshtml" />
     <Content Include="Views\Forum\ListForums.cshtml" />
     <Content Include="Views\Forum\ListThreads.cshtml" />
@@ -135,7 +136,7 @@
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49236/</IISUrl>
+          <IISUrl>http://localhost:49258/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
