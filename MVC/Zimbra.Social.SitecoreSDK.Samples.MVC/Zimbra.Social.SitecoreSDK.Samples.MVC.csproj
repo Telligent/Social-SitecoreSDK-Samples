@@ -82,16 +82,11 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Telligent.Evolution.Extensions.OAuthAuthentication, Version=1.0.18.39526, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Telligent.Evolution.Extensions.OAuthAuthentication.dll</HintPath>
-    </Reference>
     <Reference Include="Telligent.Rest.SDK">
       <HintPath>..\..\..\Social-Sitecore-SDK\lib\Telligent.Rest.SDK.dll</HintPath>
     </Reference>
-    <Reference Include="Zimbra.Social.RemotingSDK.Sitecore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Zimbra.Social.RemotingSDK.Sitecore.dll</HintPath>
+    <Reference Include="Telligent.SitecoreSDK">
+      <HintPath>..\..\lib\Telligent.SitecoreSDK.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

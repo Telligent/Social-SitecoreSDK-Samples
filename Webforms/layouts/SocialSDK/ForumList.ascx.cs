@@ -11,7 +11,7 @@ using Telligent.Evolution.Extensibility.Rest.Version1;
 
 public partial class Forums_ForumList : System.Web.UI.UserControl
 {
-    private RestHost host;
+    private Host host;
     protected override void OnInit(EventArgs e)
     {
         base.OnInit(e);
@@ -46,7 +46,7 @@ public partial class Forums_ForumList : System.Web.UI.UserControl
 
             //If you loaded multiple hosts, like say for each website, replace the string with a retrieval method of your choice.
             //Example, if you loaded by site name you could get the current site name.
-             host = Zimbra.Social.RemotingSDK.Sitecore.Api.GetHost("website", true);
+            host = Host.Get("default");
 
             var options = new NameValueCollection();
             options.Add("PageSize", "50");

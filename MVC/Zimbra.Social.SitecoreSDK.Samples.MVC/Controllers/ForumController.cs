@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Sitecore.Tasks;
-using Zimbra.Social.RemotingSDK.Sitecore;
+using Telligent.Evolution.Extensibility.Rest.Version1;
 using Zimbra.Social.SitecoreSDK.Samples.MVC.Models;
 
 namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
@@ -21,7 +21,7 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
         {
             //If you loaded multiple hosts, like say for each website, replace the string with a retrieval method of your choice.
             //Example, if you loaded by site name you could get the current site name.
-           var host = Api.GetHost("website", true);
+           var host = Host.Get("default");
 
             //When faced with options objects used in platofmr API, you can pass them in as Hashtables with the key being the property
             //and the value
