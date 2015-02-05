@@ -30,11 +30,12 @@ public partial class Forums_ForumList : System.Web.UI.UserControl
         var lblReplies = e.Item.FindControl("lblReplies") as Label;
         var lblLast = e.Item.FindControl("lblLast") as Label; 
         nameLabel.Text = forum.Name;
-        nameLabel.NavigateUrl = forum.Url;
+        nameLabel.NavigateUrl = string.Format("/community/forum?f={0}", forum.Id);
         litDesc.Text = string.IsNullOrEmpty(forum.Description) ? "":forum.Description;
         lblThreads.Text = forum.ThreadCount.ToString();
         lblReplies.Text = forum.ReplyCount.ToString();
-        lblLast.Text = DateTime.Parse(forum.LatestPostDate.ToString()).ToString();
+        if (forum.LatestPostDate != null)
+            lblLast.Text = DateTime.Parse(forum.LatestPostDate.ToString()).ToString();
 
     }
 
