@@ -16,6 +16,7 @@ public partial class Forums_ForumThreadView : System.Web.UI.UserControl
     {
         base.OnInit(e);
         rptReplies.ItemDataBound += rptReplies_ItemDataBound;
+        btnNewReplyAdd.Click += newReply_Click;
     }
 
     void rptReplies_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -62,7 +63,7 @@ public partial class Forums_ForumThreadView : System.Web.UI.UserControl
             options.Add("PageSize", "50");
             options.Add("PageIndex", "0");
             options.Add("SortBy", "PostDate");
-            options.Add("SortOrder", "Descending");
+            options.Add("SortOrder", "Ascending");
 
             var endpointForumShow = string.Format("forums/{0}.json", responseThreadShow.Thread.ForumId);
             dynamic responseForumShow = host.GetToDynamic(2, endpointForumShow);
@@ -83,5 +84,29 @@ public partial class Forums_ForumThreadView : System.Web.UI.UserControl
             litError.Text = ex.Message + "<br/><pre>" + ex.StackTrace + "</pre>";
             litError.Visible = true;
         }
+    }
+
+    protected void newReply_Click(object sender, EventArgs e)
+    {
+        //If you loaded multiple hosts, like say for each website, replace the string with a retrieval method of your choice.
+        //Example, if you loaded by site name you could get the current site name.
+        host = Host.Get("default");
+
+        int threadId;
+        if (Request["t"] == null || !Int32.TryParse(Request["t"], out threadId))
+        {
+            throw new ArgumentException("Thread Id was missing or invalid");
+        }
+
+        var options = new NameValueCollection();
+        options.Add("ThreadId", threadId.ToString());
+        options.Add("Body", tbNewReplyBody.Text);
+
+        // REST call: create the reply
+        var endpoint = string.Format("forums/threads/{0}/replies.json", threadId);
+        var postData = String.Join("&", options.AllKeys.Select(a => a + "=" + HttpUtility.UrlEncode(options[a])));
+        dynamic response = host.PostToDynamic(2, endpoint, postData);
+
+        Response.Redirect(string.Format("/community/thread?t={0}", threadId));
     }
 }

@@ -4,7 +4,9 @@
 <style>
     div.thread, div.reply{border:1px solid #333; width:600px;margin-bottom:10px;}
     table.post-author-details{margin-bottom:5px;}
-    div.post-author{padding:3px;background-color:#dcdcdc}
+    div.post-author{padding:3px;background-color:#dcdcdc; position:relative;}
+    div.post-date {position:absolute;top:3px;right:3px;font-size: 12px;}
+    .reply .text-input {display:block;width:80%;}
 </style>
 <div class="thread-list-container">
 <h2><asp:HyperLink runat="server" ID="lnkForum"></asp:HyperLink> &raquo; <asp:Literal runat="server" ID="litThreadSubject"></asp:Literal></h2>
@@ -60,6 +62,10 @@
                 </div>
             </FooterTemplate>
         </asp:Repeater>
+        <div class="reply">
+            <asp:TextBox runat="server" ID="tbNewReplyBody" TextMode="MultiLine" CssClass="text-input"></asp:TextBox>
+            <asp:Button runat="server" ID="btnNewReplyAdd" Text="Reply" CssClass="submit-button"></asp:Button>
+        </div>
     </div>
 </div>
 

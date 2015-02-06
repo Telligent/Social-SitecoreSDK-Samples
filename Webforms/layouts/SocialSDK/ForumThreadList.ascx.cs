@@ -50,14 +50,16 @@ public partial class Forums_ForumThreadList : System.Web.UI.UserControl
             //Example, if you loaded by site name you could get the current site name.
             host = Host.Get("default");
 
-            lnkForumList.Text = "Forums";
-            lnkForumList.NavigateUrl = "/community/forums";
-
             int forumId;
             if (Request["f"] == null || !Int32.TryParse(Request["f"], out forumId))
             {
                 throw new ArgumentException("Forum Id was missing or invalid");
             }
+
+            lnkForumList.Text = "Forums";
+            lnkForumList.NavigateUrl = "/community/forums";
+            lnkThreadCreate.Text = "New Post";
+            lnkThreadCreate.NavigateUrl = string.Format("/community/thread/create?f={0}", forumId);
 
             var endpointForumShow = string.Format("forums/{0}.json", forumId);
             dynamic responseForumShow = host.GetToDynamic(2, endpointForumShow);
