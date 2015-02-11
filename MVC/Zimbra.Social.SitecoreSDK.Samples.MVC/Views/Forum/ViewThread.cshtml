@@ -4,10 +4,15 @@
 @{ bool hasAnswers = Model.Thread.AnswerCount != null && Model.Thread.AnswerCount > 0;}
 @{ bool hasSuggestedAnswers = Model.Thread.SuggestedAnswerCount != null && Model.Thread.SuggestedAnswerCount > 0;}
 <style>
-    table.post-author-details{margin-bottom:5px;border:1px solid #333}
-    div.post-author{padding:3px;background-color:#dcdcdc}
+    div.thread, div.reply{border:1px solid #333; width:600px;margin-bottom:10px;}
+    table.post-author-details{margin-bottom:5px;}
+    div.post-author{padding:3px;background-color:#dcdcdc; position:relative;}
+    div.post-date {position:absolute;top:3px;right:3px;font-size: 12px;}
+    .reply .text-input {display:block;width:80%;}
+    .avatar-image {height:50px; width:50px;}
 </style>
-<h1 class="thread-subject">@Model.Thread.Subject</h1>
+
+<h1 class="thread-subject"><a href="/mvccommunity/forum/@ViewBag.ForumId">@ViewBag.ForumName</a> &raquo; @Model.Thread.Subject</h1>
 
 @if (isQA && (hasAnswers || hasSuggestedAnswers))
 {
@@ -21,7 +26,7 @@
         <table class="post-author-details">
             <tbody>
                 <tr>
-                    <td class="post-author-avatar"></td>
+                    <td class="post-author-avatar"><img src="@Model.Thread.Author.AvatarUrl" class="avatar-image"></td>
                     <td class="post-user">
                         <span>@Model.Thread.Author.DisplayName</span>
                         <div class="post-date">
@@ -33,7 +38,7 @@
         </table>
     </div>
     <div class="user-defined-markup post-body">
-        @Html.Raw(Model.Thread.Body())
+        @Html.Raw(Model.Thread.Body)
     </div>
 </div>
 <div class="view-thread">
@@ -58,4 +63,7 @@
             @Html.Raw(post.Body())
         </div>
     }
+    <div class="reply">
+        <a href="/mvccommunity/thread/reply/create/@Model.Thread.Id">Reply</a>
+    </div>
 </div>

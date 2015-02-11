@@ -1,0 +1,56 @@
+﻿@model dynamic
+
+<style>
+    .thread-list-container h2{font-size:120%}
+    .thread-list-container .thread-description{ font-style: italic;font-size: 85%;}
+    .thread-list {border-collapse: separate; border-spacing: 2px; border-color: rgb(128, 128, 128);}
+    .thread-list thead tr {border-bottom:solid 1px black;}
+    .thread-list .thread-content {width:400px;}
+    .new-thread-button {float:right;text-decoration: none;text-align: center;background: rgb(94, 180, 46);color: rgb(255, 255, 255);font-weight: 400;font-size: 13px;padding: 7px 30px;margin:10px}
+    .avatar-image {height:50px; width:50px;}
+</style>
+<div class="thread-list-container">
+    <h2><a href="/mvccommunity/forums/">Forums</a> &raquo; @ViewBag.ForumName</h2>
+    <a href="/mvccommunity/thread/create/@ViewBag.ForumId" class="new-thread-button">New Post</a>
+    <table class="thread-list">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Replies</th>
+                <th>Views</th>
+                <th>Last</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var thread in Model)
+            {
+                <tr>
+                    <td class="thread-content">
+                        <h4 class="thread-name"><a href="/mvccommunity/thread/@thread.Id">@thread.Subject</a></h4>
+                        <div class="thread-description">
+                            @Html.Raw(@thread.Body)
+                        </div>
+                    </td>
+                    <td>
+                        @thread.ReplyCount
+                    </td>
+                    <td>
+                        @thread.ViewCount
+                    </td>
+                    <td>
+                        <div class="author-info">
+                            <img src="@thread.Author.AvatarUrl" alt="User" class="avatar-image" />
+                            <ul>
+                                <li>@thread.Author.DisplayName</li>
+                                <li>Last Reply: @thread.LatestPostDate</li>
+
+                            </ul>
+                        </div>
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

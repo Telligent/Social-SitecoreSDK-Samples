@@ -1,0 +1,30 @@
+﻿@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.ForumThreadCreateModel
+
+<style>
+    .thread-create-wrapper {width:600px;}
+    .thread-create-wrapper .text-input {display:block;width:100%;}
+    .thread-create-wrapper .submit-button {margin-left:auto; margin-right:0;}
+</style>
+<h2>Create Thread</h2>
+
+@using (Html.BeginForm())
+{
+<div class="thread-create-container">
+    <div class="thread-create-wrapper">
+        @Html.HiddenFor(m => m.ForumId)
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Subject)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(m => m.Subject)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Body)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(m => m.Body)
+        </div>
+        <input type="submit" value="Post" />
+    </div>
+</div>
+}

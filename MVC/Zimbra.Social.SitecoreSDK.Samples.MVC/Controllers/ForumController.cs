@@ -36,37 +36,120 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
             //example:  If the API is core_v2_Foo.List(int,string,Options options) then the 3rd parm could be (1,"bar",Hashtable obj)
 
                 var response =host.GetToDynamic(2, endpoint);
-            
            
-            return View("ListForums",response.Forums);
+            return View("ListForums", response.Forums);
         }
 
-       
-        //public ActionResult ListThreads()
-        //{
-        //    int forumId = 52; //Hard-Coded for testing purposes, you could modify this to include a dynamic way of setting it
-        //    var host = Api.GetHost("website", true);
-        //    var options = new Hashtable();
-        //    options.Add("PageSize", 50);
-        //    options.Add("PageIndex", 0);
-        //    options.Add("SortBy", "LastPost");
-        //    options.Add("SortOrder", "Descending");
-        //    options.Add("ForumId",52);
 
-        //  //  dynamic threads = host.ExecuteMethod("core_v2_forumThread", "List", options);
-        //    return View();
-        //}
+        public ActionResult ViewForum(int forumId)
+        {
+            //If you loaded multiple hosts, like say for each website, replace the string with a retrieval method of your choice.
+            //Example, if you loaded by site name you could get the current site name.
+            var host = Host.Get("default");
 
-        //public ActionResult ViewThread()
-        //{
-        //    var threadId = 238888;//Hard-Coded for testing purposes, you could modify this to include a dynamic way of setting it
-        //    var host = Api.GetHost("website", true);
+            var endpointForumShow = string.Format("forums/{0}.json", forumId);
+            dynamic responseForumShow = host.GetToDynamic(2, endpointForumShow);
 
-        //   // var thread = host.ExecuteMethod("core_v2_forumThread", "Get", threadId);
-        //  //  var replies = host.ExecuteMethod("core_v2_forumReply", "List", threadId);
+            ViewBag.ForumName = responseForumShow.Forum.Name;
+            ViewBag.ForumId = responseForumShow.Forum.Id;
 
-        //    return View();
-        //}
+            var options = new NameValueCollection();
+            options.Add("PageSize", "50");
+            options.Add("PageIndex", "0");
+            options.Add("SortBy", "LastPost");
+            options.Add("SortOrder", "Descending");
+
+            var endpointThreadList = string.Format("forums/{0}/threads.json?{1}", forumId,
+                String.Join("&", options.AllKeys.Select(a => a + "=" + HttpUtility.UrlEncode(options[a]))));
+            dynamic responseThreadList = host.GetToDynamic(2, endpointThreadList);
+
+            return View("ViewForum", responseThreadList.Threads);
+        }
+
+        public ActionResult ViewThread(int threadId)
+        {
+            //If you loaded multiple hosts, like say for each website, replace the string with a retrieval method of your choice.
+            //Example, if you loaded by site name you could get the current site name.
+            var host = Host.Get("default");
+
+            var endpointThreadShow = string.Format("forums/threads/{0}.json", threadId);
+            dynamic responseThreadShow = host.GetToDynamic(2, endpointThreadShow);
+
+            var options = new NameValueCollection();
+            options.Add("PageSize", "50");
+            options.Add("PageIndex", "0");
+            options.Add("SortBy", "PostDate");
+            options.Add("SortOrder", "Ascending");
+
+            var endpointForumShow = string.Format("forums/{0}.json", responseThreadShow.Thread.ForumId);
+            dynamic responseForumShow = host.GetToDynamic(2, endpointForumShow);
+
+            ViewBag.ForumName = responseForumShow.Forum.Name;
+            ViewBag.ForumId = responseForumShow.Forum.Id;
+
+            var endpoint = string.Format("forums/{0}/threads/{1}/replies.json?{2}", responseForumShow.Forum.Id, threadId,
+                String.Join("&", options.AllKeys.Select(a => a + "=" + HttpUtility.UrlEncode(options[a]))));
+            dynamic response = host.GetToDynamic(2, endpoint);
+            if (response.Errors.Count > 0)
+                throw new Exception(response.Errors[0].Message.ToString());
+
+            return View("ViewThread", new ForumThreadViewModel(responseThreadShow.Thread, response.Replies));
+        }
+
+        public ActionResult CreateReply(int threadId)
+        {
+            return View(new ForumReplyCreateModel() { ThreadId = threadId });
+        }
+
+        [HttpPost]
+        public ActionResult CreateReply(ForumReplyCreateModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //If you loaded multiple hosts, like say for each website, replace the string with a retrieval method of your choice.
+                //Example, if you loaded by site name you could get the current site name.
+                var host = Host.Get("default");
+
+                var path = new NameValueCollection();
+                path.Add("ThreadId", model.ThreadId.ToString());
+                var post = new NameValueCollection();
+                post.Add("Body", model.Body);
+
+                dynamic response = host.PostToDynamic(2, "forums/threads/{ThreadId}/replies.json", true, 
+                    new RestPostOptions { PathParameters = path, PostParameters = post });
+
+                return RedirectToAction("ViewThread");
+            }
+            return View(model);
+        }
+
+        public ActionResult CreateThread(int forumId)
+        {
+            return View(new ForumThreadCreateModel() { ForumId = forumId });
+        }
+
+        [HttpPost]
+        public ActionResult CreateThread(ForumThreadCreateModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //If you loaded multiple hosts, like say for each website, replace the string with a retrieval method of your choice.
+                //Example, if you loaded by site name you could get the current site name.
+                var host = Host.Get("default");
+
+                var path = new NameValueCollection();
+                path.Add("ForumId", model.ForumId.ToString());
+                var post = new NameValueCollection();
+                post.Add("Subject", model.Subject);
+                post.Add("Body", model.Body);
+
+                dynamic response = host.PostToDynamic(2, "forums/{ForumId}/threads.json", true, new RestPostOptions { PathParameters = path, PostParameters = post});
+
+                return RedirectToAction("ViewForum");
+            }
+
+            return View(model);
+        }
 
         private string ParseQueryString(NameValueCollection nvc)
         {

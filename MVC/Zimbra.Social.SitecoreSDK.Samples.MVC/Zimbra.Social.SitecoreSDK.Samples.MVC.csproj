@@ -57,7 +57,7 @@
     <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\System.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -99,7 +99,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ForumController.cs" />
+    <Compile Include="Models\ForumReplyCreateModel.cs" />
+    <Compile Include="Models\ForumThreadCreateModel.cs" />
     <Compile Include="Models\ForumThreadViewModel.cs" />
+    <Compile Include="Pipelines\Routes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -108,11 +111,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\Sitecore.local.com.pubxml" />
+    <None Include="Properties\PublishProfiles\Sitecore.pubxml" />
+    <Content Include="Views\Forum\CreateThread.cshtml" />
+    <Content Include="Views\Forum\CreateReply.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\layouts\zimbra.cshtml" />
     <Content Include="Views\Forum\ListForums.cshtml" />
-    <Content Include="Views\Forum\ListThreads.cshtml" />
+    <Content Include="Views\Forum\ViewForum.cshtml" />
     <Content Include="Views\Forum\ViewThread.cshtml" />
   </ItemGroup>
   <PropertyGroup>
