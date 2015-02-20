@@ -1,9 +1,26 @@
-﻿@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.CommentModel
+﻿
+@using Zimbra.Social.SitecoreSDK.Samples.MVC.Models
+@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.CommentModel
 
 @if (Model != null)
 {
+  
     <div class="comments">
-        <ul class="comment-list"></ul>
+        <h3>Comments</h3>
+        <ul class="comment-list">
+            @foreach (var comment in Model.Comments)
+            {
+                <li>
+                    <div class="comment-header">
+                        <ul class="comment-meta">
+                            <li class="author">@comment.User.DisplayName</li>
+                            <li class="post-date">@DateTime.Parse(comment.CreatedDate).ToString("f")</li>
+                        </ul>
+                    </div>
+                    @Html.Raw(comment.Body)
+                </li>
+            }
+        </ul>
     </div>
 }
 
