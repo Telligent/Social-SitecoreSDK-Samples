@@ -1,0 +1,17 @@
+﻿@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.BlogPostViewModel
+<div class="blog-post">
+    <div class="blog-post-header">
+        <h1 class="post-title">@Html.Raw(Model.Post.Title)</h1>
+    </div>
+    <div class="post-meta">
+        <ul class="post-meta-list">
+            <li class="post date"><span class="post-date">@DateTime.Parse(Model.Post.PublishedDate).ToString("f")</span> by <span class="post-author">@Model.Post.Author.DisplayName</span></li>
+            <li class="total-posts">@Model.Post.Views Views</li>
+            <li class="total-posts">@Model.Post.CommentCount Comments</li>
+
+        </ul>
+    </div>
+
+
+</div>
+

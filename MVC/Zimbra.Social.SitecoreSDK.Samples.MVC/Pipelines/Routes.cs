@@ -21,6 +21,8 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Initialize
             //routes.MapRoute("xxx", "xxx/{controller}/{action}/{id}", new { action = "Index" });
 
             routes.MapRoute("ListBlogs", "mvccommunity/blogs", new { controller = "Blog", action = "ListBlogs" });
+            routes.MapRoute("BlogPostList", "mvccommunity/blogs/{id}", new { controller = "Blog", action = "ListPosts" });
+            routes.MapRoute("BlogPost", "mvccommunity/blogs/{blogid}/post/{slug}", new { controller = "Blog", action = "ShowPost" });
         }
     }
 }

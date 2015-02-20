@@ -1,0 +1,25 @@
+﻿@model dynamic
+<div class="blog-posts">
+    <ul class="blog-post-list">
+    @foreach (var post in Model)
+    {
+        <li class="blog-list-item">
+            <h3 class="post-name"><a href="/mvccommunity/blogs/@post.BlogId/post/@post.Slug">@Html.Raw(post.Title)</a></h3>
+            <div class="blog-description">
+                @Html.Raw(post.Excerpt)
+            </div>
+            <div class="post-meta">
+                <ul class="post-meta-list">
+                    <li class="post date"><span class="post-date">@DateTime.Parse(post.PublishedDate).ToString("f")</span> by <span class="post-author">@post.Author.DisplayName</span></li>
+                    <li class="total-posts">@post.Views Views</li>
+                    <li class="total-posts">@post.CommentCount Comments</li>
+                    
+                </ul>
+            </div>
+        </li>
+    }
+</ul>
+
+</div>
+
+    

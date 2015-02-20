@@ -1,10 +1,11 @@
-﻿@model dynamic
+﻿@using System.Security.Policy
+@model dynamic
 <div class="blogs">
     <ul class="blog-list">
     @foreach (var blog in Model)
     {
         <li class="blog-list-item">
-            <h3 class="blog-name"><a href="/mvccommunity/blogs/@blog.Id">@blog.Name</a></h3>
+            <h3 class="blog-name"><a href="/mvccommunity/blogs/@blog.Id">@Html.Raw(blog.Name)</a></h3>
             <div class="blog-description">
                 @Html.Raw(blog.Description)
             </div>

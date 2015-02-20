@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
+    <Compile Include="Models\BlogPostViewModel.cs" />
     <Compile Include="Models\ForumReplyCreateModel.cs" />
     <Compile Include="Models\ForumThreadCreateModel.cs" />
     <Compile Include="Models\ForumThreadViewModel.cs" />
@@ -118,6 +119,8 @@
     <Content Include="Views\Forum\CreateThread.cshtml" />
     <Content Include="Views\Forum\CreateReply.cshtml" />
     <Content Include="Views\Blog\ListBlogs.cshtml" />
+    <Content Include="Views\Blog\PostList.cshtml" />
+    <Content Include="Views\Blog\Post.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\layouts\zimbra.cshtml" />
