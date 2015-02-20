@@ -92,7 +92,10 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
                     }
                 });
 
-                model = new BlogPostViewModel(postResponse.BlogPost,commentResponse.Comments);
+                model = new BlogPostViewModel(postResponse.BlogPost
+                    ,new CommentModel(postResponse.BlogPost.ContentTypeId
+                        ,postResponse.BlogPost.ContentId
+                        ,commentResponse.Comments));
                
             }
 

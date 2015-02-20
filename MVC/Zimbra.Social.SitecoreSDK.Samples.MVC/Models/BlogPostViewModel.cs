@@ -8,12 +8,12 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Models
     public class BlogPostViewModel
     {
 
-        public BlogPostViewModel(dynamic post, dynamic comments)
+        public BlogPostViewModel(dynamic post, CommentModel  commentModel)
         {
             this.Post = post;
-            this.Comments = comments;
+            this.CommentModel = commentModel;
         }
         public dynamic Post { get; private set; }
-        public dynamic Comments { get; private set; }
+        public CommentModel CommentModel { get; private set; }
     }
 }

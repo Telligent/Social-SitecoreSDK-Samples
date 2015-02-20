@@ -2,14 +2,11 @@
 @using Sitecore.Mvc.Analytics.Extensions
 @using Zimbra.Social.SitecoreSDK.Samples.MVC
 @using Sitecore.Mvc.Presentation
-@model RenderingModel
-@{
-  Layout = null;
-}
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>@Html.Sitecore().Field("title", new { DisableWebEdit = true })</title>
+  <title>Community Server SDK Sitecore Examples</title>
   @Html.Sitecore().VisitorIdentification()
     <!-- Latest compiled and minified CSS -->
     <meta charset="utf-8">
@@ -18,12 +15,7 @@
 </head>
     <body>
         <div class="container">
-
-            <!-- Static navbar -->
-         
-
-            <h1>@Html.Sitecore().Field("title")</h1>
-            @Html.Sitecore().Placeholder("main")
+        @RenderBody()
         </div> <!-- /container -->
     </body>
 </html>

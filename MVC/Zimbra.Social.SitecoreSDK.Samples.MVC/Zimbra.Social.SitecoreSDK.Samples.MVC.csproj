@@ -102,6 +102,7 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Models\BlogPostViewModel.cs" />
+    <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\ForumReplyCreateModel.cs" />
     <Compile Include="Models\ForumThreadCreateModel.cs" />
     <Compile Include="Models\ForumThreadViewModel.cs" />
@@ -121,6 +122,8 @@
     <Content Include="Views\Blog\ListBlogs.cshtml" />
     <Content Include="Views\Blog\PostList.cshtml" />
     <Content Include="Views\Blog\Post.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_comments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\layouts\zimbra.cshtml" />
@@ -128,6 +131,7 @@
     <Content Include="Views\Forum\ViewForum.cshtml" />
     <Content Include="Views\Forum\ViewThread.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
