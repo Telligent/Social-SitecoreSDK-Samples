@@ -1,0 +1,23 @@
+﻿@model dynamic
+<div class="blogs">
+    <ul class="blog-list">
+    @foreach (var blog in Model)
+    {
+        <li class="blog-list-item">
+            <h3 class="blog-name"><a href="/mvccommunity/blogs/@blog.Id">@blog.Name</a></h3>
+            <div class="blog-description">
+                @Html.Raw(blog.Description)
+            </div>
+            <div class="blog-meta">
+                <ul class="blog-meta-list">
+                    <li class="total-posts">@blog.PostCount Posts</li>
+                    <li class="last-post">Last Post: @DateTime.Parse(blog.LatestPostDate).ToShortDateString()</li>
+                </ul>
+            </div>
+        </li>
+    }
+</ul>
+
+</div>
+
+    

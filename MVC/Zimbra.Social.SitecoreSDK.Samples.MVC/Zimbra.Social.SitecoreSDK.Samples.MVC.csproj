@@ -82,8 +82,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Telligent.Rest.SDK">
-      <HintPath>..\..\..\Social-Sitecore-SDK\lib\Telligent.Rest.SDK.dll</HintPath>
+    <Reference Include="Telligent.Rest.SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Telligent.Rest.SDK.dll</HintPath>
     </Reference>
     <Reference Include="Telligent.SitecoreSDK">
       <HintPath>..\..\lib\Telligent.SitecoreSDK.dll</HintPath>
@@ -98,6 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Models\ForumReplyCreateModel.cs" />
     <Compile Include="Models\ForumThreadCreateModel.cs" />
@@ -110,10 +112,12 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Config\Include\Zimbra.Social.SitecoreSDK.Samples.MVC.config" />
     <None Include="Properties\PublishProfiles\Sitecore.local.com.pubxml" />
     <None Include="Properties\PublishProfiles\Sitecore.pubxml" />
     <Content Include="Views\Forum\CreateThread.cshtml" />
     <Content Include="Views\Forum\CreateReply.cshtml" />
+    <Content Include="Views\Blog\ListBlogs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\layouts\zimbra.cshtml" />
