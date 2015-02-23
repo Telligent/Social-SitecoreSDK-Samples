@@ -13,10 +13,12 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Models
             ContentTypeId = contentTypeId;
             ContentId = contentId;
             Comments = comments;
+            CommentCreateModel = new CommentCreateModel(contentTypeId, contentId);
         }
-       public Guid ContentTypeId { get; private set; }
+       public Guid ContentTypeId { get;  set; }
        public Guid ContentId { get; private set; }
-       public dynamic Comments { get; private set; }
+       public CommentCreateModel CommentCreateModel { get;  set; }
+       public dynamic Comments { get;  set; }
     }
 
    

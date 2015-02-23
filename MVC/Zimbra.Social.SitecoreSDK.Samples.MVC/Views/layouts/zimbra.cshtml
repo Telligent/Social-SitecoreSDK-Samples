@@ -15,7 +15,8 @@
 </head>
     <body>
         <div class="container">
-        @RenderBody()
+            @Sitecore.Mvc.Configuration.MvcSettings.SitecoreRouteName
+            @RenderBody()
         </div> <!-- /container -->
     </body>
 </html>
