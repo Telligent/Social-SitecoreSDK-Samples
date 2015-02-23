@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Sitecore.Shell.Framework.Commands.Favorites;
 using Telligent.Evolution.Extensibility.Rest.Version1;
 
 public partial class Forums_ForumThreadCreate : System.Web.UI.UserControl
@@ -24,8 +25,7 @@ public partial class Forums_ForumThreadCreate : System.Web.UI.UserControl
 
     protected void newThread_Click(object sender, EventArgs e)
     {
-        //If you loaded multiple hosts, like say for each website, replace the string with a retrieval method of your choice.
-        //Example, if you loaded by site name you could get the current site name.
+
         host = Host.Get("default");
 
         int forumId;
@@ -35,13 +35,16 @@ public partial class Forums_ForumThreadCreate : System.Web.UI.UserControl
         }
 
         var options = new NameValueCollection();
-        options.Add("ForumId", forumId.ToString());
+
         options.Add("Subject", tbNewThreadSubject.Text);
         options.Add("Body", tbNewThreadBody.Text);
 
-        var endpoint = string.Format("forums/{0}/threads.json", forumId);
-        var postData = String.Join("&", options.AllKeys.Select(a => a + "=" + HttpUtility.UrlEncode(options[a])));
-        dynamic response = host.PostToDynamic(2, endpoint, postData);
+        var pathParms = new NameValueCollection();
+        pathParms.Add("forumid",forumId.ToString());
+
+        var endpoint = "forums/{forumid}/threads.json";
+        
+        dynamic response = host.PostToDynamic(2, endpoint, true,new RestPostOptions(){PathParameters = pathParms,PostParameters = options});
 
         Response.Redirect(string.Format("/community/forum?f={0}", forumId));
     }

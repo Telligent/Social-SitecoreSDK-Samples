@@ -12,7 +12,7 @@
         </ul>
     </div>
     <div class="blog-post-body user-generated-content">
-        @Html.Raw(Model.Post.Body)
+        <asp:Literal runat="server" ID="litBody"></asp:Literal>
     </div>
 
 </div>

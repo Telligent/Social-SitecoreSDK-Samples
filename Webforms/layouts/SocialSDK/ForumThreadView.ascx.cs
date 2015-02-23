@@ -99,13 +99,14 @@ public partial class Forums_ForumThreadView : System.Web.UI.UserControl
         }
 
         var options = new NameValueCollection();
-        options.Add("ThreadId", threadId.ToString());
         options.Add("Body", tbNewReplyBody.Text);
 
+          var pathParms = new NameValueCollection();
+        pathParms.Add("threadid",threadId.ToString());
         // REST call: create the reply
-        var endpoint = string.Format("forums/threads/{0}/replies.json", threadId);
-        var postData = String.Join("&", options.AllKeys.Select(a => a + "=" + HttpUtility.UrlEncode(options[a])));
-        dynamic response = host.PostToDynamic(2, endpoint, postData);
+        var endpoint ="forums/threads/{threadid}/replies.json";
+      
+        dynamic response = host.PostToDynamic(2, endpoint, true, new RestPostOptions(){PathParameters = pathParms,PostParameters = options});
 
         Response.Redirect(string.Format("/community/thread?t={0}", threadId));
     }
