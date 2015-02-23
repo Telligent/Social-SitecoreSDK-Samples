@@ -31,7 +31,7 @@ public partial class layouts_SocialSDK_BlogList : System.Web.UI.UserControl
         if (blog.Name != null)
         {
             lnkName.Text = blog.Name;
-            lnkName.NavigateUrl = ResolveUrl(string.Format("~/community/blogs?blogId ={0}", blog.Id));
+            lnkName.NavigateUrl = ResolveUrl(string.Format("~/community/blogs/blog/?blogId={0}", blog.Id));
         }
 
         if (blog.Description != null)
