@@ -33,7 +33,7 @@ public partial class layouts_SocialSDK_BlogPostList : System.Web.UI.UserControl
         if (post.Title != null)
         {
             lnkName.Text = post.Title;
-            lnkName.NavigateUrl = ResolveUrl(string.Format("~/community/blogs/post?postId={0}", post.Id));
+            lnkName.NavigateUrl = ResolveUrl(string.Format("~/community/blogs/post?postId={0}&blogId={1}", post.Id,post.BlogId));
         }
 
         if (post.Excerpt != null)
