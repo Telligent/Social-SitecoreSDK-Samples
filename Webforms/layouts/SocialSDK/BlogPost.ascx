@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="BlogPost.ascx.cs" Inherits="layouts_SocialSDK_BlogPost" %>
 <div class="blog-post">
     <div class="blog-post-header">
-        <h1 class="post-title"><asp:Label runat="server" ID="Label1"></asp:Label></h1>
+        <h1 class="post-title"><asp:Label runat="server" ID="lblTitle"></asp:Label></h1>
     </div>
     <div class="post-meta">
         <ul class="post-meta-list">

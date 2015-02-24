@@ -66,6 +66,8 @@ public partial class layouts_SocialSDK_BlogPost : System.Web.UI.UserControl
                     lblViews.Text = post.Views + " Views";
                 if (post.Author.DisplayName != null)
                     lblAuthor.Text = post.Author.DisplayName;
+                if (post.Title != null)
+                    lblTitle.Text = post.Title;
 
                 dynamic  commentResponse = host.GetToDynamic(2, "comments.json", true,
                 new RestGetOptions()
