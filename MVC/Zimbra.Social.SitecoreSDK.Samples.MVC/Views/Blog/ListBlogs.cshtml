@@ -1,23 +1,25 @@
 ﻿@using System.Security.Policy
 @model dynamic
 <div class="blogs">
-    <ul class="blog-list">
-    @foreach (var blog in Model)
-    {
-        <li class="blog-list-item">
-            <h3 class="blog-name"><a href="/mvccommunity/blogs/@blog.Id">@Html.Raw(blog.Name)</a></h3>
-            <div class="blog-description">
-                @Html.Raw(blog.Description)
-            </div>
-            <div class="blog-meta">
-                <ul class="blog-meta-list">
-                    <li class="total-posts">@blog.PostCount Posts</li>
-                    <li class="last-post">Last Post: @DateTime.Parse(blog.LatestPostDate).ToShortDateString()</li>
-                </ul>
-            </div>
-        </li>
-    }
-</ul>
+    <h1>Blogs</h1>
+    <ul class="blog-list list-unstyled">
+        @foreach (var blog in Model)
+        {
+            <li class="blog-list-item">
+                <h3 class="blog-name"><a href="/mvccommunity/blogs/@blog.Id">@Html.Raw(blog.Name)</a></h3>
+                <div class="meta">
+                    <ul class="blog-meta-list list-inline">
+                        <li class="total-posts">@blog.PostCount Posts</li>
+                        <li class="last-post">Last Post: @DateTime.Parse(blog.LatestPostDate).ToShortDateString()</li>
+                    </ul>
+                </div>
+                <p class="blog-description">
+                    @Html.Raw(blog.Description)
+                </p>
+           
+            </li>
+        }
+    </ul>
 
 </div>
 
