@@ -1,0 +1,10 @@
+﻿body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+
+}
+ul.comment-list li.comment-list-item{ border: 1px solid #dcdcdc;border-radius: 10px;padding: 10px;margin-bottom: 5px;}
+.author{ font-weight: bold;}
+.meta{border-bottom:solid 1px #dcdcdc}
