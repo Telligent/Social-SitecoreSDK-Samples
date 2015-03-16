@@ -1,11 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="BlogPost.ascx.cs" Inherits="layouts_SocialSDK_BlogPost" %>
-<div class="blog-post">
+<div class="blog-post row">
     <div class="blog-post-header">
-        <h1 class="post-title"><asp:Label runat="server" ID="lblTitle"></asp:Label></h1>
+        <h2 class="post-title"><asp:Label runat="server" ID="lblTitle"></asp:Label></h2>
     </div>
     <div class="post-meta">
-        <ul class="post-meta-list">
-                    <li class="post date"><asp:Label runat="server" ID="lblPostDate" CssClass="post-date"></asp:Label> by <asp:Label runat="server" ID="lblAuthor" CssClass="post-author"></asp:Label></li>
+        <ul class="meta list-inline">
+                    <li class="post date"><asp:Label runat="server" ID="lblPostDate" CssClass="post-date"></asp:Label> by <asp:Label runat="server" ID="lblAuthor" CssClass="author"></asp:Label></li>
                     <li class="total-posts"><asp:Label runat="server" ID="lblViews"></asp:Label></li>
                     <li class="total-posts"><asp:Label runat="server" ID="lblComments"></asp:Label></li>
                     
@@ -20,19 +20,19 @@
     <div class="comments">
         <h3>Comments</h3>
       
-        <ul class="comment-list">
+        <ul class="comment-list list-unstyled">
             <asp:Repeater runat="server" ID="rptComments">
                 <ItemTemplate>
-                     <li>
+                     <li class="comment-list-item">
                     <div class="comment-header">
-                        <ul class="comment-meta">
+                        <ul class="meta list-inline">
                             <li class="author"><asp:Label runat="server" ID="lblAuthor"></asp:Label></li>
                             <li class="post-date"><asp:Label runat="server" ID="lblDate"></asp:Label></li>
                         </ul>
                     </div>
-                  <div>
+                  <p>
                       <asp:Literal runat="server" ID="litBody"></asp:Literal>
-                  </div>
+                  </p>
                 </li>
                 </ItemTemplate>
             </asp:Repeater>
