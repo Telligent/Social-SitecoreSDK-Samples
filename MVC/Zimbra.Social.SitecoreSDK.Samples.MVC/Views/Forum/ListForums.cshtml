@@ -1,6 +1,7 @@
-﻿@model dynamic
-
-<table class="forum-list">
+﻿@using Sitecore.Shell.Applications.ContentEditor
+@model dynamic
+<h1>Forums</h1>
+<table class="forum-list table table-bordered">
     <thead>
         <tr>
             <th>Name</th>
@@ -26,7 +27,15 @@
                 @forum.ReplyCount
             </td>
             <td>
-                @forum.LatestPostDate
+                @if (forum.LatestPostDate == null)
+                {
+                   <span>N/A</span>
+                }
+                else
+                {
+                    @System.DateTime.Parse(forum.LatestPostDate).ToLongDateString()
+                }
+                
             </td>
         </tr>
        }

@@ -1,18 +1,10 @@
 ﻿@model dynamic
 
-<style>
-    .thread-list-container h2{font-size:120%}
-    .thread-list-container .thread-description{ font-style: italic;font-size: 85%;}
-    .thread-list {border-collapse: separate; border-spacing: 2px; border-color: rgb(128, 128, 128);}
-    .thread-list thead tr {border-bottom:solid 1px black;}
-    .thread-list .thread-content {width:400px;}
-    .new-thread-button {float:right;text-decoration: none;text-align: center;background: rgb(94, 180, 46);color: rgb(255, 255, 255);font-weight: 400;font-size: 13px;padding: 7px 30px;margin:10px}
-    .avatar-image {height:50px; width:50px;}
-</style>
+
 <div class="thread-list-container">
     <h2><a href="/mvccommunity/forums/">Forums</a> &raquo; @ViewBag.ForumName</h2>
     <a href="/mvccommunity/thread/create/@ViewBag.ForumId" class="new-thread-button">New Post</a>
-    <table class="thread-list">
+    <table class="thread-list table table-bordered">
         <thead>
             <tr>
                 <th>Subject</th>
@@ -27,9 +19,9 @@
                 <tr>
                     <td class="thread-content">
                         <h4 class="thread-name"><a href="/mvccommunity/thread/@thread.Id">@thread.Subject</a></h4>
-                        <div class="thread-description">
+                        @*<div class="thread-description">
                             @Html.Raw(@thread.Body)
-                        </div>
+                        </div>*@
                     </td>
                     <td>
                         @thread.ReplyCount
@@ -39,10 +31,17 @@
                     </td>
                     <td>
                         <div class="author-info">
-                            <img src="@thread.Author.AvatarUrl" alt="User" class="avatar-image" />
-                            <ul>
-                                <li>@thread.Author.DisplayName</li>
-                                <li>Last Reply: @thread.LatestPostDate</li>
+                            <img height="50" width="50" src="@thread.Author.AvatarUrl" alt="User" class="avatar-image" />
+                            <ul class="list-unstyled">
+                                <li class="author">@thread.Author.DisplayName</li>
+                                @if (thread.LatestPostDate == null)
+                                {
+                                    <li>No Replies</li>
+                                }
+                                else
+                                {
+                                    <li>Last Reply:@System.DateTime.Parse(thread.LatestPostDate).ToLongDateString()</li>
+                                }
 
                             </ul>
                         </div>
