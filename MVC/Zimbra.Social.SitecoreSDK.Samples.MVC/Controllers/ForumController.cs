@@ -118,7 +118,7 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
                 dynamic response = host.PostToDynamic(2, "forums/threads/{ThreadId}/replies.json", true, 
                     new RestPostOptions { PathParameters = path, PostParameters = post });
 
-                return RedirectToAction("ViewThread");
+                return RedirectToAction("ViewThread",new{threadId=model.ThreadId});
             }
             return View(model);
         }
@@ -145,7 +145,7 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
 
                 dynamic response = host.PostToDynamic(2, "forums/{ForumId}/threads.json", true, new RestPostOptions { PathParameters = path, PostParameters = post});
 
-                return RedirectToAction("ViewForum");
+                return RedirectToAction("ViewThread",new {threadId=response.Thread.Id});
             }
 
             return View(model);

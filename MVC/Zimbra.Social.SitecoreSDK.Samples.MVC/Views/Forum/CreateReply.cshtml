@@ -6,19 +6,22 @@
     .thread-create-wrapper .submit-button {margin-left:auto; margin-right:0;}
 </style>
 <h2>Create Thread</h2>
-
 @using (Html.BeginForm())
 {
-<div class="thread-create-container">
-    <div class="thread-create-wrapper">
+
+
         @Html.HiddenFor(m => m.ThreadId)
-        <div class="editor-label">
-            @Html.LabelFor(m => m.Body)
+
+        <div class="form-group">
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Body)
+            </div>
+            <div class="editor-field">
+                @Html.TextAreaFor(m => m.Body, new { @class = "form-control" })
+            </div>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(m => m.Body)
-        </div>
-        <input type="submit" value="Post" />
-    </div>
-</div>
+     
+        <input type="submit" value="Post" class=" btn btn-default" />
+  
+
 }

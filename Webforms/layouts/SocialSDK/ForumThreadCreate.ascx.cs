@@ -46,6 +46,6 @@ public partial class Forums_ForumThreadCreate : System.Web.UI.UserControl
         
         dynamic response = host.PostToDynamic(2, endpoint, true,new RestPostOptions(){PathParameters = pathParms,PostParameters = options});
 
-        Response.Redirect(string.Format("/community/forum?f={0}", forumId));
+        Response.Redirect(string.Format("/community/forums/thread?t={0}", response.Thread.Id));
     }
 }

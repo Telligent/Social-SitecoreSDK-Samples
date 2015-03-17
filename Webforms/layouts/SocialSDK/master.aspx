@@ -38,7 +38,7 @@
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li><asp:HyperLink runat="server" NavigateUrl="~/community/blogs.aspx">Blogs</asp:HyperLink></li>
-                        <li><asp:HyperLink runat="server" NavigateUrl="~/community/forms.aspx">Forums</asp:HyperLink></li>
+                        <li><asp:HyperLink runat="server" NavigateUrl="~/community/forums.aspx">Forums</asp:HyperLink></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>

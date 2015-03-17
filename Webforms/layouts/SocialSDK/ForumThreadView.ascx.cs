@@ -30,10 +30,20 @@ public partial class Forums_ForumThreadView : System.Web.UI.UserControl
         var lblPostDate = e.Item.FindControl("lblPostDate") as Label;
         var litBody = e.Item.FindControl("litBody") as Literal;
         lblAuthorName.Text = reply.Author.DisplayName;
-        imgAuthorAvatar.ImageUrl = reply.Author.AvatarUrl;
         litBody.Text = string.IsNullOrEmpty(reply.Body) ? "" : reply.Body;
         if (reply.Date != null)
             lblPostDate.Text = DateTime.Parse(reply.Date.ToString()).ToString();
+
+        var pnl = e.Item.FindControl("divReplyContainer") as Panel;
+        if (reply.IsAnswer)
+        {
+            pnl.CssClass += " answered";
+        }
+        else
+        {
+            if (reply.IsSuggestedAnswer)
+                pnl.CssClass += " suggested";
+        }
     }
 
     protected void Page_Load(object sender, EventArgs e)
@@ -78,6 +88,24 @@ public partial class Forums_ForumThreadView : System.Web.UI.UserControl
                 throw new Exception(response.Errors[0].Message.ToString());
             rptReplies.DataSource = response.Replies;
             rptReplies.DataBind();
+
+            var isQA = responseThreadShow.Thread.ThreadType == "QuestionAndAnswer";
+            var hasAnswer = responseThreadShow.Thread.AnswerCount != null && responseThreadShow.Thread.AnswerCount > 0;
+            var hasSuggestedAnswer = responseThreadShow.Thread.SuggestedAnswerCount != null && responseThreadShow.Thread.SuggestedAnswerCount > 0;
+
+            if (isQA)
+            {
+                if (hasAnswer)
+                {
+                    litStatus.Visible = true;
+                    litStatus.Text = "<div class=\"rounded thread-answer-status bg-success\"><p>This thread has verified answers</p></div>";
+                }
+                else if (hasSuggestedAnswer)
+                {
+                    litStatus.Visible = true;
+                    litStatus.Text = "<div class=\"rounded thread-answer-status bg-warning\"><p>This thread has suggested answers</p></div>";
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -108,6 +136,6 @@ public partial class Forums_ForumThreadView : System.Web.UI.UserControl
       
         dynamic response = host.PostToDynamic(2, endpoint, true, new RestPostOptions(){PathParameters = pathParms,PostParameters = options});
 
-        Response.Redirect(string.Format("/community/thread?t={0}", threadId));
+        Response.Redirect(string.Format("/community/forums/thread?t={0}", threadId));
     }
 }
