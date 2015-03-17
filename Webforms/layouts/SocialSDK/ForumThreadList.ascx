@@ -4,7 +4,7 @@
 
 <div class="thread-list-container">
 <h2><asp:HyperLink runat="server" ID="lnkForumList"></asp:HyperLink> &raquo; <asp:Literal runat="server" ID="litForumName"></asp:Literal></h2>
-<asp:HyperLink runat="server" ID="lnkThreadCreate" CssClass="new-thread-button"></asp:HyperLink>
+<asp:HyperLink runat="server" ID="lnkThreadCreate" CssClass="new-thread-button btn btn-primary"></asp:HyperLink>
 
     <asp:Repeater runat="server" ID="rptForumThreads">
         <HeaderTemplate>
