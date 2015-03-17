@@ -28,16 +28,16 @@ public partial class Forums_ForumThreadList : System.Web.UI.UserControl
 
         dynamic thread = (dynamic)e.Item.DataItem;
         var subjectLabel = e.Item.FindControl("lnkSubject") as HyperLink;
-        var litBody = e.Item.FindControl("litBody") as Literal;
         var lblReplies = e.Item.FindControl("lblReplies") as Label;
         var lblViews = e.Item.FindControl("lblViews") as Label;
         var lblLast = e.Item.FindControl("lblLast") as Label;
+        var lblAuthor = e.Item.FindControl("lblAuthor") as Label;
         subjectLabel.Text = thread.Subject;
-        subjectLabel.NavigateUrl = string.Format("/community/thread?t={0}", thread.Id);
-        litBody.Text = string.IsNullOrEmpty(thread.Body) ? "" : thread.Body;
+        subjectLabel.NavigateUrl = string.Format("/community/forums/thread?t={0}", thread.Id);
         lblReplies.Text = thread.ReplyCount.ToString();
         lblViews.Text = thread.ViewCount.ToString();
         lblLast.Text = DateTime.Parse(thread.LatestPostDate.ToString()).ToString();
+        lblAuthor.Text = thread.Author.DisplayName;
 
     }
 
@@ -59,7 +59,7 @@ public partial class Forums_ForumThreadList : System.Web.UI.UserControl
             lnkForumList.Text = "Forums";
             lnkForumList.NavigateUrl = "/community/forums";
             lnkThreadCreate.Text = "New Post";
-            lnkThreadCreate.NavigateUrl = string.Format("/community/thread/create?f={0}", forumId);
+            lnkThreadCreate.NavigateUrl = string.Format("/community/forums/create?f={0}", forumId);
 
             var endpointForumShow = string.Format("forums/{0}.json", forumId);
             dynamic responseForumShow = host.GetToDynamic(2, endpointForumShow);

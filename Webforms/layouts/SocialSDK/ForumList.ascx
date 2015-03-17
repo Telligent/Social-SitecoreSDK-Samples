@@ -1,16 +1,12 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ForumList.ascx.cs" Inherits="Forums_ForumList" %>
 <%@ Import Namespace="System.Data" %>
 
-<style>
-    .forum-list-container h2{font-size:120%}
-    .forum-list-container .forum-description{ font-style: italic;font-size: 85%;}
-</style>
-<div class="forum-list-container">
-<h2>Forums</h2>
-<div class="forums-list-wrapper">
+<h1>Forums</h1>
+
+
     <asp:Repeater runat="server" ID="rptForums">
         <HeaderTemplate>
-            <table class="forum-list">
+            <table class="forum-list table table-bordered">
                 <thead>
                    <tr>
                        <th>Name</th>
@@ -45,7 +41,6 @@
             </table>
         </FooterTemplate>
     </asp:Repeater>
-</div>
+
 
 <asp:Literal runat="server" ID="litError" Visible="false"></asp:Literal>
-</div>
