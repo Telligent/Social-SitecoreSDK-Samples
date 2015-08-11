@@ -1,0 +1,13 @@
+﻿@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.SocialModel
+
+@if (Model != null)
+{
+    <div class="ratings"></div>
+    
+    <script type="text/javascript">
+    $(function () {
+        $('.ratings').raty({ path: '/Content/images', score: @Model.Ratings.Value });
+    });
+    </script>
+}
+

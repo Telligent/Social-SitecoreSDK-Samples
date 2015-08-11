@@ -1,0 +1,15 @@
+﻿@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.SocialModel
+
+@if (Model != null)
+{
+    <div class="likes">
+        @if (Model.Likes.Results.TotalCount == 0)
+        {
+            <a href="javascript:void(0)">Like </a>
+        }
+        else
+        {
+            <a href="javascript:void(0)">Unlike <i class="fa fa-thumbs-up"></i> @Model.Likes.Results.TotalCount </a>
+        }
+</div>
+}

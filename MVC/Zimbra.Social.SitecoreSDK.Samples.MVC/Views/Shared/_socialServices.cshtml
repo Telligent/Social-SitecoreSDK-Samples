@@ -1,0 +1,40 @@
+﻿@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.SocialModel
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Comments</h3>
+            <ul class="comment-list list-unstyled">
+                @foreach (var comment in Model.Comments.Results.Comments)
+                {
+                    <li class="comment-list-item">
+                        <div class="comment-header ">
+                            <ul class="meta list-inline">
+                                <li class="author">@comment.User.DisplayName</li>
+                                <li class="post-date">@DateTime.Parse(comment.CreatedDate).ToString("f")</li>
+                            </ul>
+                        </div>
+                        <p> @Html.Raw(comment.Body)</p>
+                    </li>
+                }
+            </ul>
+
+        </div>
+        <div class="col-md-4">
+            <h3>More</h3>
+            <div class="row">
+                <div class="well">
+                    @Html.Action("ListLikes", "Social", Model)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="well">
+                    @Html.Action("ShowRating", "Social", Model)
+                </div>
+            </div>
+
+            </div>
+        </div>
+}

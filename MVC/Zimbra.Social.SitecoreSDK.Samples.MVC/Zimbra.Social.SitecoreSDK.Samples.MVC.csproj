@@ -40,10 +40,10 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\lib\Sitecore.Kernel.dll</HintPath>
+      <HintPath>ignore\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc">
-      <HintPath>..\..\lib\Sitecore.Mvc.dll</HintPath>
+      <HintPath>ignore\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -82,12 +82,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Telligent.Rest.SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Telligent.Rest.SDK.dll</HintPath>
-    </Reference>
-    <Reference Include="Telligent.SitecoreSDK">
-      <HintPath>..\..\lib\Telligent.SitecoreSDK.dll</HintPath>
+    <Reference Include="Telligent.Rest.SDK">
+      <HintPath>ignore\Telligent.Rest.SDK.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\SocialController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Models\BlogPostViewModel.cs" />
@@ -108,11 +104,18 @@
     <Compile Include="Models\ForumReplyCreateModel.cs" />
     <Compile Include="Models\ForumThreadCreateModel.cs" />
     <Compile Include="Models\ForumThreadViewModel.cs" />
+    <Compile Include="Models\LikeCreateModel.cs" />
+    <Compile Include="Models\LikeModel.cs" />
+    <Compile Include="Models\RateCreateModel.cs" />
+    <Compile Include="Models\RateModel.cs" />
+    <Compile Include="Models\SocialModel.cs" />
     <Compile Include="Pipelines\Routes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\Endpoints.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\site.css" />
+    <Content Include="Content\css\site.css" />
+    <Content Include="Content\js\raty.js" />
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
   </ItemGroup>
@@ -126,7 +129,9 @@
     <Content Include="Views\Blog\PostList.cshtml" />
     <Content Include="Views\Blog\Post.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_comments.cshtml" />
+    <Content Include="Views\Shared\_socialServices.cshtml" />
+    <Content Include="Views\Shared\_likeService.cshtml" />
+    <Content Include="Views\Shared\_rateService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\layouts\zimbra.cshtml" />

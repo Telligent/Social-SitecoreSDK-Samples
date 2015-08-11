@@ -1,45 +1,41 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Dynamic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Sitecore.Tasks;
 using Telligent.Evolution.Extensibility.Rest.Version1;
 using Zimbra.Social.SitecoreSDK.Samples.MVC.Models;
+using Zimbra.Social.SitecoreSDK.Samples.MVC.Util;
 
 namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
 {
-   
     public class ForumController : Controller
     {
         // GET: Forum  Currently a site wide aggregate
-        public   ActionResult ListForums()
+        public ActionResult ListForums()
         {
             //If you loaded multiple hosts, like say for each website, replace the string with a retrieval method of your choice.
             //Example, if you loaded by site name you could get the current site name.
-           var host = Host.Get("default");
+            var host = Host.Get("default");
 
             //When faced with options objects used in platofmr API, you can pass them in as Hashtables with the key being the property
             //and the value
-           var options = new NameValueCollection();
-           options.Add("PageSize", "50");
-           options.Add("PageIndex", "0");
-           options.Add("SortBy", "LastPost");
-           options.Add("SortOrder", "Descending");
+            var options = new NameValueCollection
+            {
+                {"PageSize", "50"},
+                {"PageIndex", "0"},
+                {"SortBy", "LastPost"},
+                {"SortOrder", "Descending"}
+            };
 
-            var endpoint = "forums.json?" + ParseQueryString(options);
+            var endpoint = Endpoints.ForumList + ParseQueryString(options);
             //The third parameter is a params[] argument, it should be the method arguments for the corresponding API.
             //example:  If the API is core_v2_Foo.List(int,string,Options options) then the 3rd parm could be (1,"bar",Hashtable obj)
 
-                var response =host.GetToDynamic(2, endpoint);
+            var response =host.GetToDynamic(2, endpoint);
            
             return View("ListForums", response.Forums);
         }
-
 
         public ActionResult ViewForum(int forumId)
         {
@@ -47,19 +43,21 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
             //Example, if you loaded by site name you could get the current site name.
             var host = Host.Get("default");
 
-            var endpointForumShow = string.Format("forums/{0}.json", forumId);
+            var endpointForumShow = string.Format(Endpoints.ForumView, forumId);
             dynamic responseForumShow = host.GetToDynamic(2, endpointForumShow);
 
             ViewBag.ForumName = responseForumShow.Forum.Name;
             ViewBag.ForumId = responseForumShow.Forum.Id;
 
-            var options = new NameValueCollection();
-            options.Add("PageSize", "50");
-            options.Add("PageIndex", "0");
-            options.Add("SortBy", "LastPost");
-            options.Add("SortOrder", "Descending");
+            var options = new NameValueCollection
+            {
+                {"PageSize", "50"},
+                {"PageIndex", "0"},
+                {"SortBy", "LastPost"},
+                {"SortOrder", "Descending"}
+            };
 
-            var endpointThreadList = string.Format("forums/{0}/threads.json?{1}", forumId,
+            var endpointThreadList = string.Format(Endpoints.ThreadsList, forumId,
                 String.Join("&", options.AllKeys.Select(a => a + "=" + HttpUtility.UrlEncode(options[a]))));
             dynamic responseThreadList = host.GetToDynamic(2, endpointThreadList);
 

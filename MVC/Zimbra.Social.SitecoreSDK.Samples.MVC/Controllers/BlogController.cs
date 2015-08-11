@@ -1,77 +1,60 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+using System.Globalization;
 using System.Web.Mvc;
-using Sitecore.Tasks;
 using Telligent.Evolution.Extensibility.Rest.Version1;
 using Zimbra.Social.SitecoreSDK.Samples.MVC.Models;
+using Zimbra.Social.SitecoreSDK.Samples.MVC.Util;
 
 namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
 {
-
     public class BlogController : Controller
     {
-        // GET: Forum  Currently a site wide aggregate
         public ActionResult ListBlogs()
         {
-
             var host = Host.Get("default");
-            var parms = new NameValueCollection();
-            parms.Add("PageSize", "50");
-            parms.Add("PageIndex", "0");
-            parms.Add("SortBy", "LastPost");
-            parms.Add("SortOrder", "Descending");
+            var parms = new NameValueCollection
+            {
+                {"PageSize", "50"},
+                {"PageIndex", "0"},
+                {"SortBy", "LastPost"},
+                {"SortOrder", "Descending"}
+            };
 
-
-
-            var endpoint = "blogs.json";
-            var options = new RestGetOptions();
-            options.QueryStringParameters = parms;
-
-            var response = host.GetToDynamic(2, endpoint, true,options );
+            var options = new RestGetOptions {QueryStringParameters = parms};
+            var response = host.GetToDynamic(2, Endpoints.BlogsJson, true,options );
 
             return View("ListBlogs", response.Blogs);
         }
 
         public ActionResult ListPosts(int id)
         {
-
             var host = Host.Get("default");
-            var parms = new NameValueCollection();
-            parms.Add("PageSize", "50");
-            parms.Add("PageIndex", "0");
-            parms.Add("SortBy", "MostRecent");
-            parms.Add("SortOrder", "Descending");
+            var parms = new NameValueCollection
+            {
+                {"PageSize", "50"},
+                {"PageIndex", "0"},
+                {"SortBy", "MostRecent"},
+                {"SortOrder", "Descending"}
+            };
 
+            var options = new RestGetOptions {QueryStringParameters = parms};
+            var pathParameters = new NameValueCollection {{"blogid", id.ToString(CultureInfo.InvariantCulture)}};
 
-
-            var endpoint = "blogs/{blogid}/posts.json";
-            var options = new RestGetOptions();
-            options.QueryStringParameters = parms;
-
-            var pathParameters = new NameValueCollection();
-            pathParameters.Add("blogid",id.ToString());
             options.PathParameters = pathParameters;
 
-            var response = host.GetToDynamic(2, endpoint, true, options);
+            var response = host.GetToDynamic(2, Endpoints.BlogsPostJson, true, options);
 
             return View("PostList", response.BlogPosts);
         }
 
-        public ActionResult ShowPost(int blogid,string slug)
+        public ActionResult ShowPost(int blogid, string slug)
         {
-
             var host = Host.Get("default");
-            BlogPostViewModel model = null;
-            
 
-            var postResponse = host.GetToDynamic(2, "blogs/{blogid}/posts/{name}.json", true,
+            BlogPostViewModel model = null;
+
+            var postResponse = host.GetToDynamic(2, Endpoints.BlogsPostNameJson, true,
                 new RestGetOptions()
                 {
                     PathParameters = new NameValueCollection() {{"blogid", blogid.ToString()}, {"name", slug}}
@@ -79,30 +62,14 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
 
             if (postResponse != null)
             {
-                var commentResponse = host.GetToDynamic(2, "comments.json", true,
-                new RestGetOptions()
-                {
-                    QueryStringParameters  = new NameValueCollection()
-                    {
-                        { "ContentId", postResponse.BlogPost.ContentId.ToString() }
-                        ,{ "ContentTypeId", postResponse.BlogPost.ContentTypeId }
-                         ,{ "PageSize", "25" }
-                          ,{ "SortBy", "CreatedUtcDate" }
-                          ,{ "SortOrder", "Ascending" }
-                    }
-                });
 
-                model = new BlogPostViewModel(postResponse.BlogPost
-                    ,new CommentModel(Guid.Parse( postResponse.BlogPost.ContentTypeId)
-                        ,Guid.Parse(postResponse.BlogPost.ContentId)
-                        ,commentResponse.Comments));
-               
+                var contentTypeId = Guid.Parse(postResponse.BlogPost.ContentTypeId);
+                var contentId = Guid.Parse(postResponse.BlogPost.ContentId);
+
+                model = new BlogPostViewModel(postResponse.BlogPost, new SocialModel(contentTypeId, contentId));
             }
 
-           
-
-            return View("Post",model);
+            return View("Post", model);
         }
     }
-
 }

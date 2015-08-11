@@ -1,4 +1,5 @@
 ﻿@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.BlogPostViewModel
+
 <div class="blog-post row">
     <div class="blog-post-header">
         <h2 class="post-title">@Html.Raw(Model.Post.Title)</h2>
@@ -12,8 +13,9 @@
         </ul>
     </div>
     <div class="blog-post-body user-generated-content">
-       @Html.Raw(Model.Post.Body)
+        @Html.Raw(Model.Post.Body)
     </div>
 
 </div>
-@Html.Partial("_comments", Model.CommentModel)
+
+@Html.Action("ListComments", "Social", Model.SocialModel)
