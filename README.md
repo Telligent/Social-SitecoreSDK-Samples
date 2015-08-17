@@ -1,5 +1,4 @@
 # Telligent Community SDK for Sitecore Samples
-##Telligent Community SDK for Sitecore Samples
 ####Dependencies
 The Telligent Community SDK for Sitecore Samples requires that you have installed and are running Telligent Community and Sitecore.  As Such this SDK has dependencies on libraries that for licensing reasons are not made available as part of this SDK.  You will need to obtain these libraries from their respective installations and copy them to the */lib* folder before compiling.  They are listed below.
 
@@ -20,7 +19,7 @@ Please refer to the [wiki section](https://github.com/Telligent/Social-SitecoreS
 You can use the [issues section](https://github.com/Telligent/Social-SitecoreSDK-Samples/issues/) of this repository to report any issues.
 
 ####Where can I ask questions?
-Please visit our [developer community](http://community.zimbra.com/developers/f) to ask questions, get answers, collaborate and connect with other developers. Plus, give us feedback there so we can continue to improve these tools for you.
+Please visit our [developer community](http://community.telligent.com/community/f/554) to ask questions, get answers, collaborate and connect with other developers. Plus, give us feedback there so we can continue to improve these tools for you.
 
 ####Can I contribute?
 Yes, we will have more details soon on how you can contribute.
