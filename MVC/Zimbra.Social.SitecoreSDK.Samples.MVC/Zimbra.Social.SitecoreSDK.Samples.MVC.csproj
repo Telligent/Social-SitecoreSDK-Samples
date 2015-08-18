@@ -39,12 +39,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>ignore\Sitecore.Kernel.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Mvc">
-      <HintPath>ignore\Sitecore.Mvc.dll</HintPath>
-    </Reference>
+    <Reference Include="Sitecore.Kernel" />
+    <Reference Include="Sitecore.Mvc" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -82,9 +78,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Telligent.Rest.SDK">
-      <HintPath>ignore\Telligent.Rest.SDK.dll</HintPath>
-    </Reference>
+    <Reference Include="Telligent.Rest.SDK" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Helpers">
@@ -104,7 +98,7 @@
     <Compile Include="Models\ForumReplyCreateModel.cs" />
     <Compile Include="Models\ForumThreadCreateModel.cs" />
     <Compile Include="Models\ForumThreadViewModel.cs" />
-    <Compile Include="Models\LikeCreateModel.cs" />
+    <Compile Include="Models\LikeCreateDeleteModel.cs" />
     <Compile Include="Models\LikeModel.cs" />
     <Compile Include="Models\RateCreateModel.cs" />
     <Compile Include="Models\RateModel.cs" />
@@ -115,12 +109,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\site.css" />
+    <Content Include="Content\images\cancel-off.png" />
+    <Content Include="Content\images\cancel-on.png" />
+    <Content Include="Content\images\off.png" />
+    <Content Include="Content\images\on.png" />
+    <Content Include="Content\images\star-half-mono.png" />
+    <Content Include="Content\images\star-half.png" />
+    <Content Include="Content\images\star-off.png" />
+    <Content Include="Content\images\star-on.png" />
     <Content Include="Content\js\raty.js" />
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\Zimbra.Social.SitecoreSDK.Samples.MVC.config" />
+    <Content Include="Content\js\samples.js" />
     <None Include="Properties\PublishProfiles\Sitecore.local.com.pubxml" />
     <None Include="Properties\PublishProfiles\Sitecore.pubxml" />
     <Content Include="Views\Forum\CreateThread.cshtml" />
@@ -132,6 +135,7 @@
     <Content Include="Views\Shared\_socialServices.cshtml" />
     <Content Include="Views\Shared\_likeService.cshtml" />
     <Content Include="Views\Shared\_rateService.cshtml" />
+    <Content Include="Views\Shared\_commentService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\layouts\zimbra.cshtml" />

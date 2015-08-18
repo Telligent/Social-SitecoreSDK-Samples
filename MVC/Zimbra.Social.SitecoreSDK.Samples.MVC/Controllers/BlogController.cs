@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Globalization;
 using System.Web.Mvc;
 using Telligent.Evolution.Extensibility.Rest.Version1;
@@ -54,19 +53,21 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
 
             BlogPostViewModel model = null;
 
-            var postResponse = host.GetToDynamic(2, Endpoints.BlogsPostNameJson, true,
-                new RestGetOptions()
+            var postResponse = host.GetToDynamic(2, 
+                Endpoints.BlogsPostNameJson, 
+                true,
+                new RestGetOptions
                 {
-                    PathParameters = new NameValueCollection() {{"blogid", blogid.ToString()}, {"name", slug}}
+                    PathParameters = new NameValueCollection
+                    {
+                        { "blogid", blogid.ToString(CultureInfo.InvariantCulture) }, 
+                        { "name", slug }
+                    }
                 });
 
             if (postResponse != null)
             {
-
-                var contentTypeId = Guid.Parse(postResponse.BlogPost.ContentTypeId);
-                var contentId = Guid.Parse(postResponse.BlogPost.ContentId);
-
-                model = new BlogPostViewModel(postResponse.BlogPost, new SocialModel(contentTypeId, contentId));
+                model = new BlogPostViewModel(postResponse.BlogPost);
             }
 
             return View("Post", model);

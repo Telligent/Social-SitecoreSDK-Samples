@@ -1,13 +1,19 @@
-﻿@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.SocialModel
+﻿@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.RateModel
 
 @if (Model != null)
 {
     <div class="ratings"></div>
     
     <script type="text/javascript">
-    $(function () {
-        $('.ratings').raty({ path: '/Content/images', score: @Model.Ratings.Value });
-    });
+        $(function () {
+            $.social.api.rate.register({
+                score           :  @Model.Value,
+                rateCreateUrl   : '@Url.Action("RateCreate", "Social")',
+                url             : '@Model.Url',
+                contentId       : '@Model.ContentId',
+                contentTypeId   : '@Model.ContentTypeId'
+            });
+        });
     </script>
 }
 

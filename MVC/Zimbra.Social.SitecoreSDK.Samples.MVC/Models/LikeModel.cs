@@ -6,17 +6,17 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Models
     {
         public LikeModel() { }
 
-        public LikeModel(Guid contentTypeId, Guid contentId, dynamic results)
+        public LikeModel(string contentTypeId, string contentId, dynamic results)
         {
             ContentTypeId = contentTypeId;
             ContentId = contentId;
             Results = results;
-            LikeCreateModel = new LikeCreateModel(contentTypeId, contentId);
         }
 
-       public Guid ContentTypeId { get;  set; }
-       public Guid ContentId { get; set; }
-       public LikeCreateModel LikeCreateModel { get; set; }
+       public string ContentTypeId { get; set; }
+       public string ContentId { get; set; }
+       public string Url { get; set; }
        public dynamic Results { get; set; }
+       public bool IsLiked { get; set; }
     }
 }

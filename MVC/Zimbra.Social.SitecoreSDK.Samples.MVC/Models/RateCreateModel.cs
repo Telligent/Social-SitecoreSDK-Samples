@@ -6,14 +6,20 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Models
     {
         public RateCreateModel() { }
 
-        public RateCreateModel(Guid contentTypeId, Guid contentId)
+        public RateCreateModel(string url)
+        {
+            Url = url;
+        }
+
+        public RateCreateModel(string contentTypeId, string contentId)
         {
             ContentTypeId = contentTypeId;
             ContentId = contentId;
         }
 
-        public Guid ContentTypeId { get;  set; }
-        public Guid ContentId { get;   set; }
+        public string ContentTypeId { get; set; }
+        public string ContentId { get; set; }
+        public string Url { get; set; }
         public double Score { get; set; }
     }
 }

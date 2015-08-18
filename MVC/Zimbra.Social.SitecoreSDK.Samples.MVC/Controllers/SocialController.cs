@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Web.Mvc;
+using Telligent.Evolution.Extensibility.OAuthClient.Version1;
 using Telligent.Evolution.Extensibility.Rest.Version1;
 using Zimbra.Social.SitecoreSDK.Samples.MVC.Models;
 using Zimbra.Social.SitecoreSDK.Samples.MVC.Util;
@@ -13,45 +14,62 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
         #region Comments
 
         [HttpPost]
-        public ActionResult CreateComment(CommentCreateModel model)
+        public ContentResult CommentCreate(CommentCreateModel model)
         {
-            if (!ModelState.IsValid) return PartialView("_socialServices", new SocialModel { Comments = null });
-
-            var options = new NameValueCollection
-                {
-                    {"ConentId", model.ContentId.ToString()},
-                    {"ContentTypeId", model.ContentTypeId.ToString()},
-                    {"Body", model.Body}
-                };
-
-                var response = Post(Endpoints.CommentsJson, options);
-                var socialModel = new SocialModel { Comments = new CommentModel(response.Content.ContentTypeId, response.Content.ContentId, response.Comment) };
-
-            return PartialView("_socialServices", socialModel);
-        }
-
-        public ActionResult ListComments(SocialModel socialService)
-        {
+            if (!ModelState.IsValid) return Content(@"{""success"":""false"",""error"":""Model state is not valid.""}", "application/json");
 
             var options = new NameValueCollection
             {
-                { "ContentId", socialService.Comments.ContentId.ToString()},
+                {"Body", model.Body}
+            };
+
+            if (!string.IsNullOrEmpty(model.Url))
+            {
+                options.Add("ContentUrl", model.Url);
+            }
+            else
+            {
+                options.Add("ContentTypeId", model.ContentTypeId);
+                options.Add("ContentId", model.ContentId);
+            }
+
+            return Post(Endpoints.CommentsJson, options);
+        }
+
+        public ActionResult CommentList(SocialModel socialService)
+        {
+            var comments = new CommentModel();
+            var options = new NameValueCollection
+            {
                 { "PageSize", "25" },
                 { "SortBy", "CreatedUtcDate" },
                 { "SortOrder", "Ascending" }
             };
 
-            var response = Get(Endpoints.CommentsJson, options);
-            socialService.Comments.Results = response;
+            if (!string.IsNullOrEmpty(socialService.Url))
+            {
+                comments.Url = socialService.Url;
+                options.Add("ContentUrl", socialService.Url);
+            }
+            else
+            {
+                comments.ContentId = socialService.ContentId;
+                comments.ContentTypeId = socialService.ContentTypeId;
+                options.Add("ContentId", socialService.ContentId);
+            }
 
-            return PartialView("_socialServices", socialService);
+            comments.Results = Get(Endpoints.CommentsJson, options);
+
+            return PartialView("_commentService", comments);
         }
 
-        public ActionResult ShowComment(Guid commentId)
+        public ActionResult CommentShow(Guid commentId)
         {
-            var response = Get(string.Format(Endpoints.CommentShowJson));
-            var socialModel = new SocialModel { Comments = new CommentModel(response.Content.ContentTypeId, response.Content.ContentId, response.Comment) };
-            return PartialView("_socialServices", socialModel);
+            var comments = new CommentModel
+            {
+                Results = Get(string.Format(Endpoints.CommentShowJson))
+            };
+            return PartialView("_commentService", comments);
         }
 
         #endregion
@@ -59,40 +77,87 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
         #region Likes
 
         [HttpPost]
-        public ActionResult CreateLike(LikeCreateModel model)
+        public ContentResult LikeCreate(LikeCreateDeleteModel model)
         {
-            var options = new NameValueCollection
-            {
-                {"ContentId", model.ContentId.ToString()},
-                {"ContentTypeId", model.ContentTypeId.ToString()}
-            };
-
-            var response = Post(Endpoints.LikesJson, options);
-            var socialModel = new SocialModel { Likes = new LikeModel(response.Content.ContentTypeId, response.Content.ContentId, response.Like) };
-            return PartialView("_likeService", socialModel);
+            return LikePost(model, Endpoints.LikesJson, Post);
         }
 
-        public ActionResult ListLikes(SocialModel socialService)
+        [HttpPost]
+        public ContentResult LikeDelete(LikeCreateDeleteModel model)
         {
-            var options = new NameValueCollection
-            {
-                {"ContentId", socialService.Likes.ContentId.ToString()}
-            };
-
-            var response = Get(Endpoints.LikesJson, options); 
-            socialService.Likes.Results = response;
-            return PartialView("_likeService", socialService);
+            return LikePost(model, Endpoints.LikeJson, Delete);
         }
 
-        public ActionResult ShowLike(Guid contentId)
+        public ActionResult LikeList(SocialModel socialService)
         {
-            var options = new NameValueCollection
+            return LikeGet(socialService, Endpoints.LikesJson, true);
+        }
+
+        public ActionResult LikeShow(SocialModel socialService)
+        {
+            return LikeGet(socialService, Endpoints.LikeJson);
+        }
+
+        private ActionResult LikeGet(SocialModel socialService, string endpoint, bool checkIsLiked = false)
+        {
+            var like = new LikeModel();
+            var options = new NameValueCollection();
+
+            if (!string.IsNullOrEmpty(socialService.Url))
             {
-                {"ContentId", contentId.ToString()}
-            };
-            var response = Get(Endpoints.LikeJson, options);
-            var socialModel = new SocialModel { Likes = new LikeModel(response.Content.ContentTypeId, response.Content.ContentId, response.Like) };
-            return PartialView("_likeService", socialModel);
+                like.Url = socialService.Url;
+                options.Add("ContentUrl", socialService.Url);
+            }
+            else
+            {
+                like.ContentId = socialService.ContentId;
+                like.ContentTypeId = socialService.ContentTypeId;
+                options.Add("ContentId", socialService.ContentId);
+            }
+
+            if (checkIsLiked)
+            {
+                var optionsChecker = new NameValueCollection(options);
+                var host = Host.Get("default");
+                var user = host.GetCurrentHttpContext().Items["SDK-User"] as User;
+                if (user != null)
+                {
+                    optionsChecker.Add("UserId", user.UserId.ToString(CultureInfo.InvariantCulture));
+                    optionsChecker.Add("PageSize", "1");
+                    optionsChecker.Add("PageIndex", "0");
+                }
+                var likeChecker = Get(endpoint, optionsChecker);
+                like.IsLiked = likeChecker != null && likeChecker.TotalCount > 0;
+            }
+
+            like.Results = Get(endpoint, options);
+
+            return PartialView("_likeService", like);
+        }
+
+        private ContentResult LikePost(LikeCreateDeleteModel model, string endpoint, Func<string, NameValueCollection, ContentResult> request)
+        {
+            if (!ModelState.IsValid) return Content(@"{""success"":""false"",""error"":""Model state is not valid.""}", "application/json");
+
+            var options = new NameValueCollection();
+
+            if (!string.IsNullOrEmpty(model.Url))
+            {
+                options.Add("ContentUrl", model.Url);
+            }
+
+            if (!string.IsNullOrEmpty(model.ContentTypeId))
+            {
+                options.Add("ContentTypeId", model.ContentTypeId);
+            }
+
+            if (!string.IsNullOrEmpty(model.ContentId))
+            {
+                
+                options.Add("ContentId", model.ContentId);
+            }
+
+            return request(endpoint, options);
         }
 
         #endregion
@@ -100,52 +165,74 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
         #region Ratings
 
         [HttpPost]
-        public ActionResult CreateRating(RateCreateModel model)
+        public ContentResult RateCreate(RateCreateModel model)
         {
-            var parms = new NameValueCollection
+            var options = new NameValueCollection
             {
-                {"ContentId", model.ContentId.ToString()},
-                {"ContentTypeId", model.ContentTypeId.ToString()},
                 {"Value", model.Score.ToString(CultureInfo.InvariantCulture)}
             };
 
-            var response = Post(Endpoints.RatingsJson, parms);
-            var socialModel = new SocialModel { Ratings = new RateModel(response.Content.ContentTypeId, response.Content.ContentId, response.Rating) };
-            return PartialView("_socialServices", socialModel);
-        }
-
-        public ActionResult ListRatings(Guid contentId, Guid contentTypeId)
-        {
-            var options = new NameValueCollection
+            if (!string.IsNullOrEmpty(model.Url))
             {
-                {"ContentId", contentId.ToString()},
-                {"ContentTypeId", contentTypeId.ToString()}
-            };
-
-            var response = Get(Endpoints.RatingsJson, options);
-            var socialModel = new SocialModel { Ratings = new RateModel(response.Content.ContentTypeId, response.Content.ContentId, response.Ratings) };
-            return PartialView("_socialServices", socialModel);
-        }
-
-        public ActionResult ShowRating(SocialModel socialService)
-        {
-            var options = new NameValueCollection
+                options.Add("ContentUrl", model.Url);
+            }
+            else
             {
-                {"ContentId", socialService.Ratings.ContentId.ToString()}
-            };
+                options.Add("ContentTypeId", model.ContentTypeId);
+                options.Add("ContentId", model.ContentId);
+            }
 
-            var response = Get(Endpoints.RatingJson, options);
-            socialService.Ratings.Results = response;
-            return PartialView("_rateService", socialService);
+            return Post(Endpoints.RatingsJson, options);
+        }
+        
+        public ActionResult RateShow(SocialModel socialService)
+        {
+            var rating = new RateModel();
+            var options = new NameValueCollection();
+
+            if (!string.IsNullOrEmpty(socialService.Url))
+            {
+                rating.Url = socialService.Url;
+                options.Add("ContentUrl", socialService.Url);
+            }
+            else
+            {
+                rating.ContentId = socialService.ContentId;
+                rating.ContentTypeId = socialService.ContentTypeId;
+                options.Add("ContentId", socialService.ContentId);
+            }
+
+            rating.Results = Get(Endpoints.RatingJson, options);
+
+            return PartialView("_rateService", rating);
         }
 
         #endregion
 
-        private dynamic Post(string endpoint, NameValueCollection parms)
+        #region Helpers
+
+        private ContentResult Delete(string endpoint, NameValueCollection parms)
+        {
+            var host = Host.Get("default");
+            var options = new RestDeleteOptions { QueryStringParameters = parms };
+            try
+            {
+                var json = host.DeleteToString(2, endpoint, true, options);
+                return Content(json, "application/json");
+            }
+            catch (Exception)
+            {
+                return Content("{}", "application/json");
+            }
+        }
+
+        private ContentResult Post(string endpoint, NameValueCollection parms)
         {
             var host = Host.Get("default");
             var options = new RestPostOptions { PostParameters = parms };
-            return host.PostToDynamic(2, endpoint, true, options);
+            var json = host.PostToString(2, endpoint, true, options);
+
+            return Content(json, "application/json");
         }
 
         private dynamic Get(string endpoint, NameValueCollection parms = null)
@@ -156,5 +243,7 @@ namespace Zimbra.Social.SitecoreSDK.Samples.MVC.Controllers
 
             return host.GetToDynamic(2, endpoint, true, options);
         }
+
+        #endregion
     }
 }

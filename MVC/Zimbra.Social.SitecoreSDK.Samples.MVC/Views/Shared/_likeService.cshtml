@@ -1,15 +1,20 @@
-﻿@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.SocialModel
+﻿@model Zimbra.Social.SitecoreSDK.Samples.MVC.Models.LikeModel
 
 @if (Model != null)
 {
-    <div class="likes">
-        @if (Model.Likes.Results.TotalCount == 0)
-        {
-            <a href="javascript:void(0)">Like </a>
-        }
-        else
-        {
-            <a href="javascript:void(0)">Unlike <i class="fa fa-thumbs-up"></i> @Model.Likes.Results.TotalCount </a>
-        }
-</div>
+    <div class="likes"></div>
+        
+    <script type="text/javascript">
+        $(function () {
+            $.social.api.like.register({
+                totalCount      :  @Model.Results.TotalCount,
+                isLiked         :  @Model.IsLiked.ToString().ToLower(),
+                createLikeUrl   : '@Url.Action("LikeCreate", "Social")',
+                deleteLikeUrl   : '@Url.Action("LikeDelete", "Social")',
+                url             : '@Model.Url',
+                contentId       : '@Model.ContentId',
+                contentTypeId   : '@Model.ContentTypeId'
+            });
+        });
+    </script>
 }
