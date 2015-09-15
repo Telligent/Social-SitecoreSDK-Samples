@@ -1,0 +1,76 @@
+﻿@model dynamic
+<head>
+<script src="~/content/js/modernizr.custom.js"></script>
+<link href="~/Content/css/blogpostlist.css" rel="stylesheet" />
+</head>
+
+
+<div class="blog-posts">
+    <h1>Blog Posts</h1>
+    <ul class="blog-post-list list-unstyled">
+	
+	
+	<div class="container">
+		<ul class="grid effect-2" id="grid">
+		
+		@foreach (var post in Model)
+		{
+		
+			string imageurl = "";
+			string[] result;
+	
+			if (@post.PostImageUrl.ToString().Length > 0)
+			{
+				imageurl = @post.PostImageUrl.ToString();
+			}
+			else{				
+				imageurl = @post.Author.AvatarUrl.ToString();
+			}
+		
+		
+		
+			<li class="pin"><a href="~/mvccommunity/blogs/@post.BlogId/post/@post.Slug">
+				<img src= "@imageurl" style="width: 100%; padding-top: 10px;"/>
+				
+							
+				<div><p><b>@Html.Raw(post.Title)</b><br>@Html.Raw(post.Excerpt)</p></div>
+				
+
+				<div class="grayback">
+					<p>
+					<img src="@post.Author.AvatarUrl" style="max-height: 45px; max-width: 35px; padding: 5px; float:left;">By @post.Author.DisplayName
+					
+					<RIGHT style="float:right;">@post.CommentCount</RIGHT><img src="~/content/assets/images/comments.png" style="max-height: 20px; max-width: 20px; padding: 3px; float:right; margin-right:10px;" /><BR>
+					
+					Published on @DateTime.Parse(post.PublishedDate).ToString("D")
+					
+					
+					
+					<RIGHT class="floatingviews">@post.Views</RIGHT><img src="~/content/assets/images/views.png" class="floatingviews2" /> <BR>
+					 
+					</p>
+				</div>
+			
+			</a></li>
+		}
+		</ul>
+	</div>
+	
+
+    </ul>
+
+</div>
+
+		<script src="~/content/js/masonry.pkgd.min.js"></script>
+		<script src="~/content/js/imagesloaded.js"></script>
+		<script src="~/content/js/classie.js"></script>
+		<script src="~/content/js/AnimOnScroll.js"></script>
+		<script>
+			new AnimOnScroll( document.getElementById( 'grid' ), {
+				minDuration : 1.4,
+				maxDuration : 1.8,
+				viewportFactor : 0.2
+			} );
+		</script>
+
+    
