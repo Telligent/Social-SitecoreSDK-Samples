@@ -1,0 +1,55 @@
+﻿@model dynamic
+
+
+<div class="thread-list-container">
+    <h2><a href="/mvccommunity/forums/">Forums</a> &raquo; @ViewBag.ForumName</h2>
+    <a href="/mvccommunity/thread/create/@ViewBag.ForumId" class="new-thread-button btn btn-primary">New Post</a>
+    <table class="thread-list table table-bordered">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Replies</th>
+                <th>Views</th>
+                <th>Last</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var thread in Model)
+            {
+                <tr>
+                    <td class="thread-content">
+                        <h4 class="thread-name"><a href="/mvccommunity/thread/@thread.Id">@thread.Subject</a></h4>
+                        @*<div class="thread-description">
+                            @Html.Raw(@thread.Body)
+                        </div>*@
+                    </td>
+                    <td>
+                        @thread.ReplyCount
+                    </td>
+                    <td>
+                        @thread.ViewCount
+                    </td>
+                    <td>
+                        <div class="author-info">
+                            <img height="50" width="50" src="@thread.Author.AvatarUrl" alt="User" class="avatar-image" />
+                            <ul class="list-unstyled">
+                                <li class="author">@thread.Author.DisplayName</li>
+                                @if (thread.LatestPostDate == null)
+                                {
+                                    <li>No Replies</li>
+                                }
+                                else
+                                {
+                                    <li>Last Reply:@System.DateTime.Parse(thread.LatestPostDate).ToLongDateString()</li>
+                                }
+
+                            </ul>
+                        </div>
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

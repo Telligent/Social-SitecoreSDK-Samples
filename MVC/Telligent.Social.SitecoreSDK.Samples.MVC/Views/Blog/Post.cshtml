@@ -1,0 +1,23 @@
+﻿@using Telligent.Social.SitecoreSDK.Samples.MVC.Models
+@model Telligent.Social.SitecoreSDK.Samples.MVC.Models.BlogPostViewModel
+
+<div class="blog-post row">
+    <div class="col-md-12">
+        <div class="blog-post-header">
+            <h2 class="post-title">@Html.Raw(Model.Post.Title)</h2>
+        </div>
+        <div class="post-meta">
+            <ul class="meta list-inline">
+                <li class="post date"><span class="post-date">@DateTime.Parse(Model.Post.PublishedDate).ToString("f")</span> by <span class="author">@Model.Post.Author.DisplayName</span></li>
+                <li class="total-posts">@Model.Post.Views Views</li>
+                <li class="total-posts">@Model.Post.CommentCount Comments</li>
+
+            </ul>
+        </div>
+        <div class="blog-post-body user-generated-content">
+            @Html.Raw(Model.Post.Body)
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_socialServices", new SocialModel(Model.Post.ContentTypeId, Model.Post.ContentId))
