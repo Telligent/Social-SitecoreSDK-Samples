@@ -1,0 +1,19 @@
+﻿@model Telligent.SitecoreSDK.Samples.MVC.Models.RateModel
+
+@if (Model != null)
+{
+    <div class="ratings"></div>
+    
+    <script type="text/javascript">
+        $(function () {
+            $.social.api.rate.register({
+                score           :  @Model.Value,
+                rateCreateUrl   : '@Url.Action("RateCreate", "Social")',
+                url             : '@Model.Url',
+                contentId       : '@Model.ContentId',
+                contentTypeId   : '@Model.ContentTypeId'
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,27 @@
+﻿@model Telligent.SitecoreSDK.Samples.MVC.Models.ForumReplyCreateModel
+
+<style>
+    .thread-create-wrapper {width:600px;}
+    .thread-create-wrapper .text-input {display:block;width:100%;}
+    .thread-create-wrapper .submit-button {margin-left:auto; margin-right:0;}
+</style>
+<h2>Create Thread</h2>
+@using (Html.BeginForm())
+{
+
+
+        @Html.HiddenFor(m => m.ThreadId)
+
+        <div class="form-group">
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Body)
+            </div>
+            <div class="editor-field">
+                @Html.TextAreaFor(m => m.Body, new { @class = "form-control" })
+            </div>
+        </div>
+     
+        <input type="submit" value="Post" class=" btn btn-default" />
+  
+
+}

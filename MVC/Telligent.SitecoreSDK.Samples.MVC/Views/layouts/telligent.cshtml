@@ -1,0 +1,67 @@
+﻿@using System.Security.Policy
+@using Sitecore.Mvc
+@using Sitecore.Mvc.Analytics.Extensions
+@using Telligent.SitecoreSDK.Samples.MVC
+@using Sitecore.Mvc.Presentation
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Community Server SDK Sitecore Examples</title>
+  @Html.Sitecore().VisitorIdentification()
+    <!-- Latest compiled and minified CSS -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    
+    <!-- Latest FontAwesome css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    
+    <!-- JQuery Star Rating Plugin - Raty 2.7.0 -->
+    <script src="~/Content/js/raty.js"></script>
+    
+    <script src="~/Content/js/samples.js"></script>
+    
+    <!-- Latest FontAwesome used for likes -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+    <link href="~/Content/css/site.css" rel="stylesheet" />
+</head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">SDK Samples</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        @*
+                        <li>@Html.ActionLink("Blogs", "Blog", "ListBlogs")</li>
+                        <li>@Html.ActionLink("Forums", "Forum", "ListForums")</li>
+                        *@
+                        <li><a href="~/mvccommunity/blogs">Blogs</a></li>
+                        <li><a href="~/mvccommunity/forums">Forums</a></li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
+        <div class="container">
+           @RenderBody()   
+        </div>
+    </body>
+</html>
