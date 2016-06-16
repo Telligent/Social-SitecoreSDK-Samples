@@ -199,3 +199,7 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+/MVC/Telligent.SitecoreSDK.Samples.MVC/Scripts/
+/MVC/Telligent.SitecoreSDK.Samples.MVC/fonts/
+/MVC/Telligent.SitecoreSDK.Samples.MVC/Content/

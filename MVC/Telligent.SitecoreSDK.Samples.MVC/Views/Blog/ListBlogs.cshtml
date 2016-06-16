@@ -11,7 +11,10 @@
                 <div class="meta">
                     <ul class="blog-meta-list list-inline">
                         <li class="total-posts">@blog.PostCount Posts</li>
-                        <li class="last-post">Last Post: @DateTime.Parse(blog.LatestPostDate).ToShortDateString()</li>
+                        @if (blog.LatestPostDate != null)
+                        {
+                            <li class="last-post">Last Post: @DateTime.Parse(blog.LatestPostDate).ToShortDateString()</li>
+                        }
                     </ul>
                 </div>
                 <p class="blog-description">
